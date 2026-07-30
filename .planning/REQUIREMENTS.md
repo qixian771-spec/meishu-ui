@@ -21,7 +21,7 @@
 
 ### Handoff（设计→代码）
 
-- [ ] **HANDOFF-01**: 设计到代码的集成规范（分层模型、玻璃模糊预算、token→uniform 映射、海报资源管线）
+- [x] **HANDOFF-01**: 设计到代码的集成规范（分层模型、玻璃模糊预算、token→uniform 映射、海报资源管线） — *已交付：docs/INTEGRATION_SPEC.md + handoffSpec.ts*
 
 ### QA
 
@@ -53,7 +53,7 @@
 | VISUAL-02 | Phase 2 | completed |
 | VISUAL-03 | Phase 3 | completed |
 | VISUAL-04 | Phase 4 | completed |
-| HANDOFF-01 | Phase 6 | pending |
+| HANDOFF-01 | Phase 6 | completed |
 | QA-01 | Phase 7 | pending |
 
 *Traceability filled by roadmap (2026-07-30). Coverage: 11/11 v1 requirements mapped.*

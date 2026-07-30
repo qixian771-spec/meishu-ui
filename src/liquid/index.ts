@@ -11,3 +11,11 @@ export { resolveInitialTier } from './tierResolver';
 export { defaultTheme, warmTheme } from './defaultTheme';
 export { themeToUniforms, hexToVec3 } from './themeBridge';
 export type { LiquidTheme, LiquidUniforms, LiquidCanvasOptions, QualityTier } from './types';
+export {
+  Z_INDEX_STACK,
+  GLASS_BLUR_BUDGET,
+  CSS_VARIABLE_MAP,
+  POSTER_PIPELINE_SPEC,
+  isValidBlurRadius,
+  getBackdropFilterCSS,
+} from './handoffSpec';
