@@ -113,7 +113,8 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. 降级链路 T1→T2→T3 在真实硬件上端到端演练，每一级均非黑且视觉一致
   3. 集成 GPU 硬件上性能符合既定预算（无热节流崩溃、标签页隐藏暂停生效）
   4. 视觉输出对照参考图（4 张参考截图 + Spectra 液态意图）确认一致，分歧已记录
-**Plans**: TBD
+**Plans**: 1 plan
+- [ ] 07-01-PLAN.md — Cross-device hardware matrix test suite + Tier transition E2E drill + Performance budget thermal audit + Reference visual consistency report + Build verification gate
 **UI hint**: yes
 
 ## Progress
@@ -129,4 +130,4 @@ Phases execute in numeric order: 1 (delivered) → 2 → 3 → 4 → 5 → 6 →
 | 4. Accessibility & No-WebGL Fallback | 1 plan | Complete | 2026-07-30 |
 | 5. Liquid Element Differentiators & Static Canvas Verification | 1 plan | Complete | 2026-07-30 |
 | 6. Design→Code Integration Spec | 1 plan | Complete | 2026-07-30 |
-| 7. Cross-Device QA & Reference Consistency | 0/TBD | Not started | - |
+| 7. Cross-Device QA & Reference Consistency | 1 plan | In progress | - |
