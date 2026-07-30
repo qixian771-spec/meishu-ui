@@ -44,16 +44,16 @@
 
 | REQ-ID | Phase | Status |
 |--------|-------|--------|
-| DESIGN-01 | — | delivered (backfill) |
-| DESIGN-02 | — | delivered (backfill) |
-| VISUAL-01 | — | delivered (backfill) |
-| DESIGN-03 | TBD | pending |
-| DESIGN-04 | TBD | pending |
-| DESIGN-05 | TBD | pending |
-| VISUAL-02 | TBD | pending |
-| VISUAL-03 | TBD | pending |
-| VISUAL-04 | TBD | pending |
-| HANDOFF-01 | TBD | pending |
-| QA-01 | TBD | pending |
+| DESIGN-01 | Phase 1 | delivered (backfill) |
+| DESIGN-02 | Phase 1 | delivered (backfill) |
+| VISUAL-01 | Phase 1 | delivered (backfill) |
+| DESIGN-03 | Phase 5 | pending |
+| DESIGN-04 | Phase 5 | pending |
+| DESIGN-05 | Phase 5 | pending |
+| VISUAL-02 | Phase 2 | pending |
+| VISUAL-03 | Phase 3 | pending |
+| VISUAL-04 | Phase 4 | pending |
+| HANDOFF-01 | Phase 6 | pending |
+| QA-01 | Phase 7 | pending |
 
-*Traceability filled by roadmap.*
+*Traceability filled by roadmap (2026-07-30). Coverage: 11/11 v1 requirements mapped.*
