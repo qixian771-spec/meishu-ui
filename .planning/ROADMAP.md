@@ -18,7 +18,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 4: Accessibility & No-WebGL Fallback** - prefers-reduced-motion 冻结单帧；无 WebGL/低功耗降级为主题化静态海报 — *已交付：reducedMotion + data-tier + precisionFallback*
 - [x] **Phase 5: Liquid Element Differentiators & Static Canvas Verification** - 液态签名织入 Logo/导航/按钮/头像/胶囊，并校验静态画布液态观感 — *已交付：LiquidLogo + LiquidButton + LiquidAvatar + LiquidBadge + NavActivePill + ardotTokenMap*
 - [x] **Phase 6: Design→Code Integration Spec** - 分层模型、玻璃模糊预算、token→uniform 映射、海报资源管线集成规范 — *已交付：docs/INTEGRATION_SPEC.md + handoffSpec.ts*
-- [ ] **Phase 7: Cross-Device QA & Reference Consistency** - 跨设备/跨 GPU 视觉与性能校验，对照参考图一致性确认
+- [x] **Phase 7: Cross-Device QA & Reference Consistency** - 跨设备/跨 GPU 视觉与性能校验，对照参考图一致性确认 — *已交付：crossDeviceQA.test.ts + docs/QA_REPORT.md*
 
 ## Phase Details
 
@@ -130,4 +130,4 @@ Phases execute in numeric order: 1 (delivered) → 2 → 3 → 4 → 5 → 6 →
 | 4. Accessibility & No-WebGL Fallback | 1 plan | Complete | 2026-07-30 |
 | 5. Liquid Element Differentiators & Static Canvas Verification | 1 plan | Complete | 2026-07-30 |
 | 6. Design→Code Integration Spec | 1 plan | Complete | 2026-07-30 |
-| 7. Cross-Device QA & Reference Consistency | 1 plan | In progress | - |
+| 7. Cross-Device QA & Reference Consistency | 1 plan | Complete | 2026-07-30 |

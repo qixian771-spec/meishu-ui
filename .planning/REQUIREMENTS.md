@@ -25,7 +25,7 @@
 
 ### QA
 
-- [ ] **QA-01**: 跨设备/跨 GPU 视觉与性能校验；对照参考图一致性确认
+- [x] **QA-01**: 跨设备/跨 GPU 视觉与性能校验；对照参考图一致性确认 — *已交付：crossDeviceQA.test.ts + docs/QA_REPORT.md*
 
 ## v2 Requirements（deferred）
 
@@ -54,6 +54,6 @@
 | VISUAL-03 | Phase 3 | completed |
 | VISUAL-04 | Phase 4 | completed |
 | HANDOFF-01 | Phase 6 | completed |
-| QA-01 | Phase 7 | pending |
+| QA-01 | Phase 7 | completed |
 
 *Traceability filled by roadmap (2026-07-30). Coverage: 11/11 v1 requirements mapped.*
