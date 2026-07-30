@@ -16,7 +16,7 @@
 
 - [x] **VISUAL-01**: WebGL 动态液态背景（fragment shader + 域扭曲噪声，含流动+变形）— *已交付：liquid-demo.html*
 - [x] **VISUAL-02**: 将 WebGL 液态移植为生产组件（Three.js/R3F 或保留原生 WebGL），配色/速度/扭曲提升为 uniform，由主题 token 驱动 — *已交付：LiquidCanvas.ts + <LiquidBackground/>*
-- [ ] **VISUAL-03**: 性能与降级——rAF 门控、visibility 暂停、像素比/分辨率缩放、质量分级（T1 全量 / T2 冻结帧 / T3 静态海报）
+- [x] **VISUAL-03**: 性能与降级——rAF 门控、visibility 暂停、像素比/分辨率缩放、质量分级（T1 全量 / T2 冻结帧 / T3 静态海报） — *已交付：QualityGovernor + PosterLayer + tierResolver*
 - [ ] **VISUAL-04**: 无障碍——prefers-reduced-motion 冻结单帧；无 WebGL/低功耗时降级为主题化静态海报
 
 ### Handoff（设计→代码）
@@ -51,7 +51,7 @@
 | DESIGN-04 | Phase 5 | pending |
 | DESIGN-05 | Phase 5 | pending |
 | VISUAL-02 | Phase 2 | completed |
-| VISUAL-03 | Phase 3 | pending |
+| VISUAL-03 | Phase 3 | completed |
 | VISUAL-04 | Phase 4 | pending |
 | HANDOFF-01 | Phase 6 | pending |
 | QA-01 | Phase 7 | pending |

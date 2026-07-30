@@ -7,8 +7,7 @@ type GL = WebGL2RenderingContext | WebGLRenderingContext;
 
 /**
  * Framework-agnostic WebGL2-first engine. Owns context, compile/link, rAF,
- * resize/DPR, context-loss, and uniform pushing. The rAF loop is structured as
- * start()/stop()/renderOnce() from day one so Phase 3 can gate it without refactor.
+ * resize/DPR, quality scale, visibility gating, context-loss, and uniform pushing.
  */
 export class LiquidCanvas {
   private canvas: HTMLCanvasElement;
@@ -20,8 +19,11 @@ export class LiquidCanvas {
   private aPos = 0;
   private raf = 0;
   private startT = 0;
+  private pausedAt = 0;
+  private accumulatedPauseTime = 0;
   private running = false;
   private dprCap: number;
+  private qualityScale = 1.0;
   private onError?: (e: Error) => void;
   private uniforms = themeToUniforms({ colors: ['#000000', '#000000', '#000000', '#000000', '#000000'], base: '#000000', intensity: 0, speed: 0, warp: 2 });
   private disposed = false;
@@ -29,6 +31,7 @@ export class LiquidCanvas {
   constructor(opts: LiquidCanvasOptions) {
     this.canvas = opts.canvas;
     this.dprCap = opts.dprCap ?? 2;
+    this.qualityScale = opts.qualityScale ?? 1.0;
     this.onError = opts.onError;
 
     const gl2 = this.canvas.getContext('webgl2', { antialias: false, alpha: false, powerPreference: 'high-performance' }) as WebGL2RenderingContext | null;
@@ -51,7 +54,11 @@ export class LiquidCanvas {
     this.initBuffer();
     this.resize();
     this.setTheme(opts.theme);
+
     this.canvas.addEventListener('webglcontextlost', this.onContextLost as EventListener);
+    if (typeof document !== 'undefined') {
+      document.addEventListener('visibilitychange', this.onVisibilityChange);
+    }
   }
 
   private compile(type: number, src: string): WebGLShader | null {
@@ -132,11 +139,25 @@ export class LiquidCanvas {
     if (this.locs.u_warp) gl.uniform1f(this.locs.u_warp, this.uniforms.u_warp);
   }
 
+  /** Set resolution quality scale factor (0.5 to 1.0). Dynamically scales the drawing buffer. */
+  setQualityScale(scale: number): void {
+    this.qualityScale = Math.min(1.0, Math.max(0.5, scale));
+    this.resize();
+  }
+
+  getQualityScale(): number {
+    return this.qualityScale;
+  }
+
+  getAccumulatedPauseTime(): number {
+    return this.accumulatedPauseTime;
+  }
+
   resize(): void {
     if (!this.gl) return;
     const dpr = Math.min(window.devicePixelRatio || 1, this.dprCap);
-    const w = Math.max(1, Math.floor(this.canvas.clientWidth * dpr));
-    const h = Math.max(1, Math.floor(this.canvas.clientHeight * dpr));
+    const w = Math.max(1, Math.floor(this.canvas.clientWidth * dpr * this.qualityScale));
+    const h = Math.max(1, Math.floor(this.canvas.clientHeight * dpr * this.qualityScale));
     if (this.canvas.width !== w || this.canvas.height !== h) {
       this.canvas.width = w;
       this.canvas.height = h;
@@ -150,16 +171,19 @@ export class LiquidCanvas {
   renderOnce(time?: number): void {
     if (!this.gl || !this.program) return;
     const gl = this.gl;
-    const t = time ?? (performance.now() - this.startT) / 1000;
+    const t = time ?? (performance.now() - this.startT - this.accumulatedPauseTime) / 1000;
     if (this.locs.u_time) gl.uniform1f(this.locs.u_time, t);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
   }
 
   /** Begin the rAF loop. Safe to call once; no-op if already running. */
-  start(): void {
+  start(resume = false): void {
     if (!this.gl || !this.program || this.running) return;
     this.running = true;
-    this.startT = performance.now();
+    if (!resume) {
+      this.startT = performance.now();
+      this.accumulatedPauseTime = 0;
+    }
     const loop = () => {
       if (!this.running) return;
       this.renderOnce();
@@ -168,12 +192,37 @@ export class LiquidCanvas {
     this.raf = requestAnimationFrame(loop);
   }
 
+  /** Pause animation on tab hide or manual pause; records pausedAt. */
+  pauseAnimation(): void {
+    if (!this.running) return;
+    this.pausedAt = performance.now();
+    this.stop();
+  }
+
+  /** Resume animation on tab restore; accumulates pause time so u_time doesn't jump. */
+  resumeAnimation(): void {
+    if (this.running || this.pausedAt === 0) return;
+    this.accumulatedPauseTime += performance.now() - this.pausedAt;
+    this.pausedAt = 0;
+    this.start(true);
+  }
+
   /** Cancel the rAF loop without destroying the context. */
   stop(): void {
     this.running = false;
     if (this.raf) cancelAnimationFrame(this.raf);
     this.raf = 0;
   }
+
+  private onVisibilityChange = (): void => {
+    if (typeof document !== 'undefined') {
+      if (document.hidden) {
+        this.pauseAnimation();
+      } else {
+        this.resumeAnimation();
+      }
+    }
+  };
 
   private onContextLost = (e: Event): void => {
     e.preventDefault();
@@ -187,6 +236,9 @@ export class LiquidCanvas {
     this.disposed = true;
     this.stop();
     this.canvas.removeEventListener('webglcontextlost', this.onContextLost as EventListener);
+    if (typeof document !== 'undefined') {
+      document.removeEventListener('visibilitychange', this.onVisibilityChange);
+    }
     const gl = this.gl;
     if (gl && this.program) {
       gl.deleteProgram(this.program);

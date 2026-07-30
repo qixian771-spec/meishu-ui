@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { LiquidBackground } from './liquid';
 import { defaultTheme, warmTheme } from './liquid/defaultTheme';
-import type { LiquidTheme } from './liquid/types';
+import type { LiquidTheme, QualityTier } from './liquid/types';
 
 const THEMES: Record<string, LiquidTheme> = {
   default: defaultTheme,
@@ -12,6 +12,9 @@ export default function App() {
   const [themeKey, setThemeKey] = useState<keyof typeof THEMES>('default');
   const [speed, setSpeed] = useState(defaultTheme.speed);
   const [warp, setWarp] = useState(defaultTheme.warp);
+  const [tierOverride, setTierOverride] = useState<QualityTier | undefined>(undefined);
+  const [activeTier, setActiveTier] = useState<QualityTier>('T1');
+  const [qualityScale, setQualityScale] = useState(1.0);
 
   const liveTheme = useMemo<LiquidTheme>(
     () => ({ ...THEMES[themeKey], speed, warp }),
@@ -20,8 +23,12 @@ export default function App() {
 
   return (
     <>
-      <div className="liquid-base-layer" />
-      <LiquidBackground theme={liveTheme} />
+      <LiquidBackground
+        theme={liveTheme}
+        tier={tierOverride}
+        onTierChange={setActiveTier}
+        onQualityScaleChange={setQualityScale}
+      />
 
       <div
         style={{
@@ -32,7 +39,7 @@ export default function App() {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          gap: 24,
+          gap: 20,
           color: '#fff',
           fontFamily: '"Noto Sans SC", system-ui, sans-serif',
           pointerEvents: 'none',
@@ -40,8 +47,8 @@ export default function App() {
       >
         <div style={{ pointerEvents: 'auto', textAlign: 'center' }}>
           <h1 style={{ margin: 0, fontSize: 28, fontWeight: 700 }}>灵犀 Nexus</h1>
-          <p style={{ margin: '8px 0 0', opacity: 0.6, fontSize: 14 }}>
-            WebGL 液态动态背景 · 生产组件 · 主题 token 驱动（热换肤不重编译）
+          <p style={{ margin: '8px 0 0', opacity: 0.65, fontSize: 14 }}>
+            Phase 3 WebGL 液态生产组件 · 自动质量分级 (T1/T2/T3) · 零黑屏海报兜底
           </p>
         </div>
 
@@ -49,56 +56,98 @@ export default function App() {
           style={{
             pointerEvents: 'auto',
             display: 'flex',
-            gap: 12,
+            gap: 14,
             background: 'rgba(255,255,255,0.06)',
             border: '1px solid rgba(255,255,255,0.12)',
-            borderRadius: 16,
-            padding: 16,
-            backdropFilter: 'blur(20px)',
-            WebkitBackdropFilter: 'blur(20px)',
+            borderRadius: 18,
+            padding: 20,
+            backdropFilter: 'blur(24px)',
+            WebkitBackdropFilter: 'blur(24px)',
             flexDirection: 'column',
-            minWidth: 260,
+            minWidth: 320,
+            boxShadow: '0 20px 48px rgba(0,0,0,0.4)',
           }}
         >
-          <div style={{ display: 'flex', gap: 8 }}>
-            {Object.keys(THEMES).map((k) => (
-              <button
-                key={k}
-                onClick={() => {
-                  setThemeKey(k);
-                  setSpeed(THEMES[k].speed);
-                  setWarp(THEMES[k].warp);
-                }}
-                style={btn(themeKey === k)}
-              >
-                {k}
-              </button>
-            ))}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <span style={{ fontSize: 13, fontWeight: 600, opacity: 0.9 }}>质量分级 (Quality Tier):</span>
+            <span
+              style={{
+                fontSize: 12,
+                fontWeight: 700,
+                padding: '2px 8px',
+                borderRadius: 6,
+                background: activeTier === 'T1' ? '#4ADE80' : activeTier === 'T2' ? '#F59E0B' : '#EF4444',
+                color: '#0A0A0F',
+              }}
+            >
+              {activeTier} {activeTier === 'T1' ? '(Full)' : activeTier === 'T2' ? '(Frozen)' : '(Poster)'}
+            </span>
           </div>
-          <label style={{ fontSize: 13, opacity: 0.8 }}>
-            速度 speed = {speed.toFixed(3)}
-            <input
-              type="range"
-              min={0}
-              max={0.2}
-              step={0.005}
-              value={speed}
-              onChange={(e) => setSpeed(Number(e.target.value))}
-              style={{ width: '100%' }}
-            />
-          </label>
-          <label style={{ fontSize: 13, opacity: 0.8 }}>
-            扭曲 warp = {warp.toFixed(2)}
-            <input
-              type="range"
-              min={0.5}
-              max={4}
-              step={0.1}
-              value={warp}
-              onChange={(e) => setWarp(Number(e.target.value))}
-              style={{ width: '100%' }}
-            />
-          </label>
+
+          <div style={{ display: 'flex', gap: 6 }}>
+            {(['Auto', 'T1', 'T2', 'T3'] as const).map((t) => {
+              const val = t === 'Auto' ? undefined : t;
+              const isSelected = tierOverride === val;
+              return (
+                <button
+                  key={t}
+                  onClick={() => setTierOverride(val)}
+                  style={btn(isSelected)}
+                >
+                  {t}
+                </button>
+              );
+            })}
+          </div>
+
+          <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: 12, display: 'flex', flexDirection: 'column', gap: 10 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, opacity: 0.8 }}>
+              <span>DPR & Resolution Scale:</span>
+              <span style={{ fontWeight: 600 }}>{qualityScale.toFixed(2)}x</span>
+            </div>
+
+            <div style={{ display: 'flex', gap: 8 }}>
+              {Object.keys(THEMES).map((k) => (
+                <button
+                  key={k}
+                  onClick={() => {
+                    setThemeKey(k);
+                    setSpeed(THEMES[k].speed);
+                    setWarp(THEMES[k].warp);
+                  }}
+                  style={btn(themeKey === k)}
+                >
+                  Theme: {k}
+                </button>
+              ))}
+            </div>
+
+            <label style={{ fontSize: 13, opacity: 0.8 }}>
+              速度 speed = {speed.toFixed(3)}
+              <input
+                type="range"
+                min={0}
+                max={0.2}
+                step={0.005}
+                value={speed}
+                onChange={(e) => setSpeed(Number(e.target.value))}
+                style={{ width: '100%' }}
+              />
+            </label>
+
+            <label style={{ fontSize: 13, opacity: 0.8 }}>
+              扭曲 warp = {warp.toFixed(2)}
+              <input
+                type="range"
+                min={0.5}
+                max={4}
+                step={0.1}
+                value={warp}
+                onChange={(e) => setWarp(Number(e.target.value))}
+                style={{ width: '100%' }}
+              />
+            </label>
+          </div>
         </div>
       </div>
     </>
@@ -108,13 +157,13 @@ export default function App() {
 function btn(active: boolean): React.CSSProperties {
   return {
     flex: 1,
-    padding: '8px 12px',
-    borderRadius: 10,
+    padding: '6px 10px',
+    borderRadius: 8,
     border: '1px solid rgba(255,255,255,0.15)',
     background: active ? 'linear-gradient(135deg,#A78BFA,#60A5FA 55%,#4ADE80)' : 'rgba(255,255,255,0.05)',
     color: active ? '#0A0A0F' : '#fff',
     fontWeight: 600,
-    fontSize: 14,
+    fontSize: 13,
     cursor: 'pointer',
   };
 }

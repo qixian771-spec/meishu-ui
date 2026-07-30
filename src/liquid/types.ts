@@ -1,3 +1,5 @@
+export type QualityTier = 'T1' | 'T2' | 'T3';
+
 export interface LiquidTheme {
   /** Five palette colors as #RRGGBB (violet, blue, green, coral, pink by default). */
   colors: [string, string, string, string, string];
@@ -25,6 +27,8 @@ export interface LiquidCanvasOptions {
   theme: LiquidTheme;
   /** devicePixelRatio clamp (default 2). */
   dprCap?: number;
+  /** Initial quality scale factor (default 1.0, range 0.5 to 1.0). */
+  qualityScale?: number;
   /** Called on WebGL unavailable or context loss (Phase 2 surfaces; Phase 3 handles fallback). */
   onError?: (e: Error) => void;
 }
