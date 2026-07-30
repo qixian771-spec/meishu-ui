@@ -46,7 +46,8 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. 调色板（u_color[5]/u_base）、强度、速度、扭曲以 uniform 暴露，可由主题 token 驱动（热路径中无硬编码 vec3 字面量）
   3. canvas 位于根层叠上下文，无 transform/opacity/will-change 祖先，backdrop-filter 采样不会被静默破坏
   4. 在健康 GPU 上组件以预期质量渲染流动+变形液态，控制台无报错
-**Plans**: TBD
+**Plans**: 1 plan
+- [ ] 02-01-PLAN.md — Verbatim shader port + LiquidCanvas engine + ThemeBridge + <LiquidBackground/> wrapper + stacking-context contract + theme-drive demo + 4-criterion verification gate
 **UI hint**: yes
 
 ### Phase 3: Degradation & Performance Tiers
