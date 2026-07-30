@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: Production WebGL Liquid Component** - 液态 demo 移植为生产组件，配色/速度/扭曲提升为 uniform，由主题 token 驱动 — *已交付：LiquidCanvas.ts + <LiquidBackground/>*
 - [x] **Phase 3: Degradation & Performance Tiers** - rAF 门控、visibility 暂停、分辨率缩放、质量分级 T1/T2/T3 与海报兜底 — *已交付：QualityGovernor + PosterLayer + tierResolver*
 - [x] **Phase 4: Accessibility & No-WebGL Fallback** - prefers-reduced-motion 冻结单帧；无 WebGL/低功耗降级为主题化静态海报 — *已交付：reducedMotion + data-tier + precisionFallback*
-- [ ] **Phase 5: Liquid Element Differentiators & Static Canvas Verification** - 液态签名织入 Logo/导航/按钮/头像/胶囊，并校验静态画布液态观感
+- [x] **Phase 5: Liquid Element Differentiators & Static Canvas Verification** - 液态签名织入 Logo/导航/按钮/头像/胶囊，并校验静态画布液态观感 — *已交付：LiquidLogo + LiquidButton + LiquidAvatar + LiquidBadge + NavActivePill + ardotTokenMap*
 - [ ] **Phase 6: Design→Code Integration Spec** - 分层模型、玻璃模糊预算、token→uniform 映射、海报资源管线集成规范
 - [ ] **Phase 7: Cross-Device QA & Reference Consistency** - 跨设备/跨 GPU 视觉与性能校验，对照参考图一致性确认
 
@@ -127,6 +127,6 @@ Phases execute in numeric order: 1 (delivered) → 2 → 3 → 4 → 5 → 6 →
 | 2. Production WebGL Liquid Component | 1 plan | Complete | 2026-07-30 |
 | 3. Degradation & Performance Tiers | 1 plan | Complete | 2026-07-30 |
 | 4. Accessibility & No-WebGL Fallback | 1 plan | Complete | 2026-07-30 |
-| 5. Liquid Element Differentiators & Static Canvas Verification | 0/TBD | Not started | - |
+| 5. Liquid Element Differentiators & Static Canvas Verification | 1 plan | Complete | 2026-07-30 |
 | 6. Design→Code Integration Spec | 0/TBD | Not started | - |
 | 7. Cross-Device QA & Reference Consistency | 0/TBD | Not started | - |

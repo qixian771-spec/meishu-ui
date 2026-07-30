@@ -1,0 +1,53 @@
+.nav-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+}
+
+.nav-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  transition: color 0.25s var(--liquid-pour-ease);
+  width: 100%;
+  text-align: left;
+}
+
+.nav-item:hover {
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.nav-item.active {
+  color: #0A0A0F;
+  font-weight: 700;
+}
+
+.nav-active-pill {
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  background: var(--liquid-signature-gradient);
+  box-shadow: 0 4px 16px rgba(74, 222, 128, 0.35);
+  transition: transform 0.35s var(--liquid-pour-ease), height 0.35s var(--liquid-pour-ease);
+  z-index: 0;
+}
+
+.nav-item-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}

@@ -8,9 +8,9 @@
 
 - [x] **DESIGN-01**: 4 个核心界面静态设计稿（登录/注册、首页仪表盘、列表+详情、个人中心/设置）— *已交付：Ardot 709534505401417*
 - [x] **DESIGN-02**: 液态渐变作为系统级底层母题铺到全部 4 个界面 — *已交付*
-- [ ] **DESIGN-03**: 液态签名织入品牌 Logo 标记（全站一致）
-- [ ] **DESIGN-04**: 液态签名织入激活态导航、主按钮、头像、状态胶囊等核心交互元素
-- [ ] **DESIGN-05**: 截图后端恢复后，对照参考图校验静态画布液态观感；必要时上多层发光色团版
+- [x] **DESIGN-03**: 液态签名织入品牌 Logo 标记（全站一致） — *已交付：LiquidLogo.tsx*
+- [x] **DESIGN-04**: 液态签名织入激活态导航、主按钮、头像、状态胶囊等核心交互元素 — *已交付：LiquidButton + LiquidAvatar + LiquidBadge + NavActivePill*
+- [x] **DESIGN-05**: 截图后端恢复后，对照参考图校验静态画布液态观感；必要时上多层发光色团版 — *已交付：ardotTokenMap + LiquidStaticBlobs*
 
 ### Visual（WebGL 液态动态）
 
@@ -47,9 +47,9 @@
 | DESIGN-01 | Phase 1 | delivered (backfill) |
 | DESIGN-02 | Phase 1 | delivered (backfill) |
 | VISUAL-01 | Phase 1 | delivered (backfill) |
-| DESIGN-03 | Phase 5 | pending |
-| DESIGN-04 | Phase 5 | pending |
-| DESIGN-05 | Phase 5 | pending |
+| DESIGN-03 | Phase 5 | completed |
+| DESIGN-04 | Phase 5 | completed |
+| DESIGN-05 | Phase 5 | completed |
 | VISUAL-02 | Phase 2 | completed |
 | VISUAL-03 | Phase 3 | completed |
 | VISUAL-04 | Phase 4 | completed |

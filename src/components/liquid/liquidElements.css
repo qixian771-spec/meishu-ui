@@ -1,0 +1,90 @@
+:root {
+  --liquid-signature-gradient: linear-gradient(135deg, #A78BFA 0%, #60A5FA 50%, #4ADE80 100%);
+  --liquid-glow-color: rgba(96, 165, 250, 0.4);
+  --liquid-cta-text: #0A0A0F;
+  --liquid-border-accent: rgba(167, 139, 250, 0.35);
+  --liquid-pour-ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Liquid Brand Logo */
+.liquid-logo-mark {
+  background: var(--liquid-signature-gradient);
+  box-shadow: 0 4px 16px var(--liquid-glow-color);
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s var(--liquid-pour-ease), box-shadow 0.25s var(--liquid-pour-ease);
+}
+
+.liquid-logo-mark:hover {
+  transform: scale(1.05) rotate(-2deg);
+  box-shadow: 0 6px 24px rgba(74, 222, 128, 0.5);
+}
+
+/* Liquid Primary CTA Button */
+.liquid-button {
+  background: var(--liquid-signature-gradient);
+  color: var(--liquid-cta-text);
+  font-weight: 700;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 20px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(74, 222, 128, 0.25);
+  transition: transform 0.2s var(--liquid-pour-ease), box-shadow 0.2s var(--liquid-pour-ease);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.liquid-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(96, 165, 250, 0.45);
+}
+
+.liquid-button:focus-visible {
+  outline: 2px solid #60A5FA;
+  outline-offset: 3px;
+}
+
+/* Liquid Avatar Ring */
+.liquid-avatar-container {
+  position: relative;
+  display: inline-block;
+}
+
+.liquid-avatar-ring {
+  padding: 2px;
+  border-radius: 50%;
+  background: var(--liquid-signature-gradient);
+  box-shadow: 0 0 12px var(--liquid-glow-color);
+}
+
+.liquid-avatar-img {
+  border-radius: 50%;
+  display: block;
+}
+
+/* Liquid Status Badge */
+.liquid-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--liquid-border-accent);
+  backdrop-filter: blur(10px);
+  color: #FFFFFF;
+}
+
+.liquid-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--liquid-signature-gradient);
+}
