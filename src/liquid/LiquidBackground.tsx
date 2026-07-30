@@ -21,11 +21,12 @@ export interface LiquidBackgroundProps {
 
 /**
  * Integrated Production Liquid Component.
- * - Always renders persistent <PosterLayer/> at z:0 (zero layout shift, zero black screen).
+ * - Always renders persistent <PosterLayer/> at z:0 with data-tier attribute (zero layout shift, zero black screen).
  * - Manages WebGL canvas at z:10 with Tier Controller:
  *   - T1: Full WebGL animation (rAF loop)
- *   - T2: Frozen single-frame WebGL render (0% ongoing CPU/GPU)
+ *   - T2: Frozen single-frame WebGL render (0% ongoing CPU/GPU, WCAG 2.2.2 compliance)
  *   - T3: WebGL canvas unmounted, PosterLayer floor fallback
+ * - Dynamic prefers-reduced-motion media query listener for real-time T1 <-> T2 switching.
  * - Integrates QualityGovernor for dynamic resolution downscaling.
  */
 export function LiquidBackground({
@@ -46,6 +47,39 @@ export function LiquidBackground({
   useEffect(() => {
     if (tierProp !== undefined) {
       setActiveTier(tierProp);
+    }
+  }, [tierProp]);
+
+  // Listen to dynamic prefers-reduced-motion changes when tierProp is not explicitly controlling
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.matchMedia) return;
+    if (tierProp !== undefined) return;
+
+    try {
+      const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const handleMotionChange = (e: MediaQueryListEvent | MediaQueryList) => {
+        if (e.matches) {
+          setActiveTier('T2');
+        } else {
+          setActiveTier(resolveInitialTier());
+        }
+      };
+
+      if (mediaQuery.addEventListener) {
+        mediaQuery.addEventListener('change', handleMotionChange);
+      } else if ('addListener' in mediaQuery) {
+        (mediaQuery as unknown as { addListener: (fn: typeof handleMotionChange) => void }).addListener(handleMotionChange);
+      }
+
+      return () => {
+        if (mediaQuery.removeEventListener) {
+          mediaQuery.removeEventListener('change', handleMotionChange);
+        } else if ('removeListener' in mediaQuery) {
+          (mediaQuery as unknown as { removeListener: (fn: typeof handleMotionChange) => void }).removeListener(handleMotionChange);
+        }
+      };
+    } catch {
+      // ignore media query listener errors
     }
   }, [tierProp]);
 
@@ -116,12 +150,13 @@ export function LiquidBackground({
 
   return (
     <>
-      <PosterLayer theme={theme} className={className} />
+      <PosterLayer theme={theme} tier={activeTier} className={className} />
       {activeTier !== 'T3' &&
         createPortal(
           <canvas
             ref={canvasRef}
             className={cls}
+            data-tier={activeTier}
             aria-hidden="true"
             style={{ position: 'fixed', inset: '0', zIndex: 10, pointerEvents: 'none', display: 'block' }}
           />,

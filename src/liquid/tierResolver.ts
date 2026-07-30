@@ -3,12 +3,21 @@ import type { QualityTier } from './types';
 /**
  * Evaluates browser capabilities and device hints to resolve initial QualityTier:
  * - T3: No WebGL support, WebGL context lost, or saveData enabled.
- * - T2: Low hardware concurrency (<= 2 cores) or reduced motion requested.
+ * - T2: prefers-reduced-motion requested, low hardware concurrency (<= 2 cores).
  * - T1: Healthy GPU / multi-core system.
  */
 export function resolveInitialTier(): QualityTier {
   if (typeof window === 'undefined' || typeof document === 'undefined') {
     return 'T3';
+  }
+
+  // Check prefers-reduced-motion (WCAG 2.2.2 compliance)
+  try {
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
+      return 'T2';
+    }
+  } catch {
+    // ignore matchMedia error
   }
 
   // Check WebGL availability

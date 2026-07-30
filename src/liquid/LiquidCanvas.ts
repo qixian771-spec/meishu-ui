@@ -75,7 +75,7 @@ export class LiquidCanvas {
     return sh;
   }
 
-  private link(vs: WebGLShader, fs: WebGLShader): WebGLProgram | null {
+  private link(vs: WebGLShader, fs: WebGLShader, silent = false): WebGLProgram | null {
     const gl = this.gl!;
     const prog = gl.createProgram();
     if (!prog) return null;
@@ -83,7 +83,9 @@ export class LiquidCanvas {
     gl.attachShader(prog, fs);
     gl.linkProgram(prog);
     if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
-      this.onError?.(new Error('Shader link failed: ' + gl.getProgramInfoLog(prog)));
+      if (!silent) {
+        this.onError?.(new Error('Shader link failed: ' + gl.getProgramInfoLog(prog)));
+      }
       gl.deleteProgram(prog);
       return null;
     }
@@ -95,11 +97,11 @@ export class LiquidCanvas {
     const vs = this.compile(gl.VERTEX_SHADER, vertSrc);
     const fs = this.compile(gl.FRAGMENT_SHADER, fragSrc);
     if (!vs || !fs) return false;
-    let prog = this.link(vs, fs);
+    let prog = this.link(vs, fs, !this.isWebGL2);
     // Declaration fallback (WebGL1 only): swap highp → mediump, relink. No octave reduction.
     if (!prog && !this.isWebGL2) {
       const fsMed = this.compile(gl.FRAGMENT_SHADER, fragSrc.replace('precision highp float;', 'precision mediump float;'));
-      if (fsMed) prog = this.link(vs, fsMed);
+      if (fsMed) prog = this.link(vs, fsMed, false);
     }
     if (!prog) return false;
     this.program = prog;

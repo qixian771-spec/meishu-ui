@@ -48,7 +48,7 @@ export default function App() {
         <div style={{ pointerEvents: 'auto', textAlign: 'center' }}>
           <h1 style={{ margin: 0, fontSize: 28, fontWeight: 700 }}>灵犀 Nexus</h1>
           <p style={{ margin: '8px 0 0', opacity: 0.65, fontSize: 14 }}>
-            Phase 3 WebGL 液态生产组件 · 自动质量分级 (T1/T2/T3) · 零黑屏海报兜底
+            Phase 4 无障碍 (WCAG 2.2.2) 与 No-WebGL 海报降级 · data-tier 端到端可观测
           </p>
         </div>
 
@@ -64,12 +64,12 @@ export default function App() {
             backdropFilter: 'blur(24px)',
             WebkitBackdropFilter: 'blur(24px)',
             flexDirection: 'column',
-            minWidth: 320,
+            minWidth: 340,
             boxShadow: '0 20px 48px rgba(0,0,0,0.4)',
           }}
         >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ fontSize: 13, fontWeight: 600, opacity: 0.9 }}>质量分级 (Quality Tier):</span>
+            <span style={{ fontSize: 13, fontWeight: 600, opacity: 0.9 }}>当前 Tier (data-tier):</span>
             <span
               style={{
                 fontSize: 12,
@@ -80,7 +80,7 @@ export default function App() {
                 color: '#0A0A0F',
               }}
             >
-              {activeTier} {activeTier === 'T1' ? '(Full)' : activeTier === 'T2' ? '(Frozen)' : '(Poster)'}
+              {activeTier} {activeTier === 'T1' ? '(Full)' : activeTier === 'T2' ? '(Reduced Motion / Frozen)' : '(Poster Fallback)'}
             </span>
           </div>
 

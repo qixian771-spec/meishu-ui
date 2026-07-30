@@ -1,8 +1,9 @@
-import type { LiquidTheme } from './types';
+import type { LiquidTheme, QualityTier } from './types';
 import { defaultTheme } from './defaultTheme';
 
 export interface PosterLayerProps {
   theme?: LiquidTheme;
+  tier?: QualityTier;
   className?: string;
 }
 
@@ -10,8 +11,9 @@ export interface PosterLayerProps {
  * Persistent theme-driven poster layer at z-index: 0.
  * Guarantees zero black voids or layout shifts during WebGL loading,
  * tier downgrades (T3 poster fallback), or WebGL context loss.
+ * Exposes data-tier attribute for DOM observability.
  */
-export function PosterLayer({ theme = defaultTheme, className }: PosterLayerProps) {
+export function PosterLayer({ theme = defaultTheme, tier = 'T1', className }: PosterLayerProps) {
   const [c0, c1, c2, c3, c4] = theme.colors;
   const base = theme.base;
 
@@ -33,5 +35,5 @@ export function PosterLayer({ theme = defaultTheme, className }: PosterLayerProp
 
   const cls = ['liquid-base-layer', className].filter(Boolean).join(' ');
 
-  return <div className={cls} style={style} data-testid="poster-layer" aria-hidden="true" />;
+  return <div className={cls} style={style} data-testid="poster-layer" data-tier={tier} aria-hidden="true" />;
 }
