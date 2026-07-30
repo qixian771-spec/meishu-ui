@@ -1,0 +1,27 @@
+/* Stacking-context contract — keep the canvas in the ROOT stacking context.
+   NO transform/opacity/will-change/filter/backdrop-filter/mask/clip-path/
+   perspective/contain/isolation/mix-blend-mode on html, body, #root, or the canvas,
+   so backdrop-filter sampling on future glass panels is not silently broken. */
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: #0A0A0F;
+}
+
+.liquid-base-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: #0A0A0F;
+}
+
+.liquid-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  pointer-events: none;
+  display: block;
+}

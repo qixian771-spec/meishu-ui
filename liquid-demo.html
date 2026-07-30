@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>液态动态背景 · WebGL — 灵犀 Nexus</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    background: #0A0A0F;
+    overflow: hidden;
+    font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+    color: #fff;
+  }
+  #gl { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+
+  .panel {
+    position: fixed; left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: 420px; max-width: 88vw;
+    padding: 46px 40px 40px;
+    border-radius: 26px;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.13);
+    -webkit-backdrop-filter: blur(26px) saturate(1.2);
+    backdrop-filter: blur(26px) saturate(1.2);
+    box-shadow: 0 24px 64px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.16);
+    text-align: center;
+  }
+  .logo {
+    width: 54px; height: 54px; margin: 0 auto 18px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #A78BFA, #60A5FA 45%, #4ADE80 80%);
+    box-shadow: 0 8px 24px rgba(96,165,250,.35);
+  }
+  .panel h1 { font-size: 26px; font-weight: 700; letter-spacing: .5px; margin-bottom: 8px; }
+  .panel p { font-size: 14px; line-height: 1.7; color: rgba(255,255,255,.62); margin-bottom: 26px; }
+  .btn {
+    display: inline-block; padding: 13px 30px;
+    border-radius: 14px; font-size: 15px; font-weight: 600;
+    color: #0A0A0F; text-decoration: none;
+    background: linear-gradient(135deg, #A78BFA, #60A5FA 55%, #4ADE80);
+    box-shadow: 0 6px 22px rgba(74,222,128,.28);
+  }
+  .tag {
+    position: fixed; right: 22px; bottom: 18px;
+    font-size: 12px; letter-spacing: .5px; color: rgba(255,255,255,.35);
+  }
+  .fail {
+    position: fixed; inset: 0; display: none;
+    align-items: center; justify-content: center;
+    background: #0A0A0F; color: rgba(255,255,255,.7); font-size: 15px;
+  }
+</style>
+</head>
+<body>
+<canvas id="gl"></canvas>
+
+<div class="panel">
+  <div class="logo"></div>
+  <h1>灵犀 Nexus</h1>
+  <p>WebGL 液态动态背景 · 域扭曲噪声驱动，色场持续流动与变形。玻璃面板压在其上，即为登录页真实观感。</p>
+  <a class="btn" href="#">进入工作区</a>
+</div>
+<div class="tag">Liquid Gradient · WebGL Fragment Shader</div>
+<div class="fail" id="fail">当前环境不支持 WebGL，无法渲染液态背景。</div>
+
+<script>
+(function () {
+  const canvas = document.getElementById('gl');
+  const gl = canvas.getContext('webgl', { antialias: false, alpha: false })
+          || canvas.getContext('experimental-webgl');
+  if (!gl) { document.getElementById('fail').style.display = 'flex'; return; }
+
+  const VERT = `
+attribute vec2 a_pos;
+void main(){ gl_Position = vec4(a_pos, 0.0, 1.0); }
+`;
+
+  const FRAG = `
+precision highp float;
+uniform vec2 u_res;
+uniform float u_time;
+
+/* --- 3D Simplex noise (Ashima / Ian McEwan, MIT) --- */
+vec3 mod289(vec3 x){ return x - floor(x*(1.0/289.0))*289.0; }
+vec4 mod289(vec4 x){ return x - floor(x*(1.0/289.0))*289.0; }
+vec4 permute(vec4 x){ return mod289(((x*34.0)+1.0)*x); }
+vec4 taylorInvSqrt(vec4 r){ return 1.79284291400159 - 0.85373472095314*r; }
+float snoise(vec3 v){
+  const vec2 C = vec2(1.0/6.0, 1.0/3.0);
+  const vec4 D = vec4(0.0, 0.5, 1.0, 2.0);
+  vec3 i  = floor(v + dot(v, C.yyy));
+  vec3 x0 = v - i + dot(i, C.xxx);
+  vec3 g = step(x0.yzx, x0.xyz);
+  vec3 l = 1.0 - g;
+  vec3 i1 = min(g.xyz, l.zxy);
+  vec3 i2 = max(g.xyz, l.zxy);
+  vec3 x1 = x0 - i1 + C.xxx;
+  vec3 x2 = x0 - i2 + C.yyy;
+  vec3 x3 = x0 - D.yyy;
+  i = mod289(i);
+  vec4 p = permute(permute(permute(i.z + vec4(0.0,i1.z,i2.z,1.0)) + i.y + vec4(0.0,i1.y,i2.y,1.0)) + i.x + vec4(0.0,i1.x,i2.x,1.0));
+  float n_ = 0.142857142857;
+  vec3 ns = n_ * D.wyz - D.xzx;
+  vec4 j = p - 49.0*floor(p*ns.z*ns.z);
+  vec4 x_ = floor(j*ns.z);
+  vec4 y_ = floor(j - 7.0*x_);
+  vec4 x = x_*ns.x + ns.yyyy;
+  vec4 y = y_*ns.x + ns.yyyy;
+  vec4 h = 1.0 - abs(x) - abs(y);
+  vec4 b0 = vec4(x.xy, y.xy);
+  vec4 b1 = vec4(x.zw, y.zw);
+  vec4 s0 = floor(b0)*2.0 + 1.0;
+  vec4 s1 = floor(b1)*2.0 + 1.0;
+  vec4 sh = -step(h, vec4(0.0));
+  vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy;
+  vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww;
+  vec3 p0 = vec3(a0.xy, h.x);
+  vec3 p1 = vec3(a0.zw, h.y);
+  vec3 p2 = vec3(a1.xy, h.z);
+  vec3 p3 = vec3(a1.zw, h.w);
+  vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2,p2), dot(p3,p3)));
+  p0 *= norm.x; p1 *= norm.y; p2 *= norm.z; p3 *= norm.w;
+  vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);
+  m = m*m;
+  return 42.0 * dot(m*m, vec4(dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3)));
+}
+
+float fbm(vec3 p){
+  float f = 0.0;
+  float amp = 0.5;
+  for(int i=0;i<5;i++){ f += amp*snoise(p); p *= 2.0; amp *= 0.5; }
+  return f;
+}
+
+void main(){
+  vec2 uv = (gl_FragCoord.xy*2.0 - u_res) / min(u_res.x, u_res.y);
+  float t = u_time * 0.05;
+
+  /* 域扭曲：噪声再喂给噪声 → 色场持续流动、翻卷、变形（真液态） */
+  vec3 p = vec3(uv*1.35, t);
+  vec3 q = vec3(
+    fbm(p),
+    fbm(p + vec3(5.2, 1.3, 2.8)),
+    fbm(p + vec3(8.3, 2.8, 1.1))
+  );
+  vec3 r = vec3(
+    fbm(p + 2.0*q + vec3(1.7, 9.2, 0.5) + 0.15*t),
+    fbm(p + 2.0*q + vec3(8.3, 2.8, 0.8) + 0.12*t),
+    fbm(p + 2.0*q + vec3(4.1, 6.0, 0.3) + 0.10*t)
+  );
+  float f = fbm(p + 2.5*r);
+
+  /* 调色板（参考图粉彩 + 品牌绿） */
+  vec3 cViolet = vec3(0.655, 0.545, 0.980);
+  vec3 cBlue   = vec3(0.376, 0.647, 0.980);
+  vec3 cGreen  = vec3(0.290, 0.871, 0.502);
+  vec3 cCoral  = vec3(0.984, 0.443, 0.522);
+  vec3 cPink   = vec3(0.957, 0.447, 0.714);
+
+  vec3 col = mix(cViolet, cBlue, smoothstep(0.0, 1.0, q.x*0.5+0.5));
+  col = mix(col, cGreen, smoothstep(0.10, 0.90, r.y*0.5+0.5));
+  col = mix(col, cCoral, smoothstep(0.20, 0.95, r.z*0.5+0.5));
+  col = mix(col, cPink,  smoothstep(0.30, 1.00, q.z*0.5+0.5) * 0.6);
+
+  /* 亮度场 → 液态色团的强弱起伏 */
+  float inten = smoothstep(-0.25, 0.95, f);
+  vec3 base = vec3(0.039, 0.039, 0.059);   /* #0A0A0F 深色底，保证 UI 可读 */
+  vec3 outc = base + col * inten * 0.9;
+
+  /* 轻微暗角，聚焦中心 */
+  float vig = 1.0 - 0.32 * dot(uv*0.5, uv*0.5);
+  outc *= vig;
+
+  gl_FragColor = vec4(outc, 1.0);
+}
+`;
+
+  function compile(type, src) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+      console.error(gl.getShaderInfoLog(s));
+      return null;
+    }
+    return s;
+  }
+
+  const vs = compile(gl.VERTEX_SHADER, VERT);
+  const fs = compile(gl.FRAGMENT_SHADER, FRAG);
+  if (!vs || !fs) { document.getElementById('fail').style.display = 'flex'; return; }
+
+  const prog = gl.createProgram();
+  gl.attachShader(prog, vs);
+  gl.attachShader(prog, fs);
+  gl.linkProgram(prog);
+  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+    console.error(gl.getProgramInfoLog(prog));
+    document.getElementById('fail').style.display = 'flex';
+    return;
+  }
+  gl.useProgram(prog);
+
+  // 全屏三角形
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW);
+  const loc = gl.getAttribLocation(prog, 'a_pos');
+  gl.enableVertexAttribArray(loc);
+  gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+
+  const uRes = gl.getUniformLocation(prog, 'u_res');
+  const uTime = gl.getUniformLocation(prog, 'u_time');
+
+  function resize() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.floor(canvas.clientWidth * dpr);
+    canvas.height = Math.floor(canvas.clientHeight * dpr);
+    gl.viewport(0, 0, canvas.width, canvas.height);
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  const start = performance.now();
+  function frame(now) {
+    gl.uniform2f(uRes, canvas.width, canvas.height);
+    gl.uniform1f(uTime, (now - start) / 1000);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
