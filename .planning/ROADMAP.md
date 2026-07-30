@@ -73,7 +73,8 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. 无 WebGL（或 WebGL 上下文丢失）的设备/浏览器上展示主题化静态海报（T3），无黑屏、无破画布伪影
   3. 降级链路端到端可观测（T1 动画 → T2 冻结 → T3 海报），每一级均非黑且配色一致
   4. shader 精度安全处理（尝试 highp，失败回退 mediump），老旧/移动 GPU 不黑屏
-**Plans**: TBD
+**Plans**: 1 plan
+- [ ] 04-01-PLAN.md — prefers-reduced-motion dynamic listener + webglcontextlost T3 fallback + data-tier DOM observability + dev harness simulation + Vitest contract test suite
 **UI hint**: yes
 
 ### Phase 5: Liquid Element Differentiators & Static Canvas Verification
@@ -125,7 +126,7 @@ Phases execute in numeric order: 1 (delivered) → 2 → 3 → 4 → 5 → 6 →
 | 1. Static Design Foundation & Liquid Demo | delivered (backfill) | Complete (backfill) | 2026-07-30 |
 | 2. Production WebGL Liquid Component | 1 plan | Complete | 2026-07-30 |
 | 3. Degradation & Performance Tiers | 1 plan | Complete | 2026-07-30 |
-| 4. Accessibility & No-WebGL Fallback | 0/TBD | Not started | - |
+| 4. Accessibility & No-WebGL Fallback | 0/1 | In progress | - |
 | 5. Liquid Element Differentiators & Static Canvas Verification | 0/TBD | Not started | - |
 | 6. Design→Code Integration Spec | 0/TBD | Not started | - |
 | 7. Cross-Device QA & Reference Consistency | 0/TBD | Not started | - |
