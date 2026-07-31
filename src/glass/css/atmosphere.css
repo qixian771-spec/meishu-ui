@@ -1,0 +1,87 @@
+
+/* Liquid stage: drifting colour under every glass panel.
+   Without it, backdrop-filter only blurs a flat fill and the glass reads as grey plastic.
+   Must stay in the root stacking context — no transform/filter on .app-container. */
+.liquid-stage-wash {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.liquid-stage-wash span {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  will-change: transform;
+}
+
+.liquid-stage-wash span:nth-child(1) {
+  top: -14%;
+  left: -8%;
+  width: 52vw;
+  height: 52vw;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--accent-primary) 26%, transparent) 0%,
+    transparent 68%
+  );
+  animation: stage-drift-a 34s ease-in-out infinite;
+}
+
+.liquid-stage-wash span:nth-child(2) {
+  top: -6%;
+  right: -10%;
+  width: 46vw;
+  height: 46vw;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--accent-swatch) 22%, transparent) 0%,
+    transparent 66%
+  );
+  animation: stage-drift-b 44s ease-in-out infinite;
+}
+
+.liquid-stage-wash span:nth-child(3) {
+  bottom: -18%;
+  left: 22%;
+  width: 58vw;
+  height: 58vw;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--accent-primary) 18%, transparent) 0%,
+    transparent 70%
+  );
+  animation: stage-drift-c 52s ease-in-out infinite;
+}
+
+.liquid-stage-wash span:nth-child(4) {
+  top: 30%;
+  left: 34%;
+  width: 38vw;
+  height: 38vw;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.07) 0%, transparent 72%);
+  animation: stage-drift-b 38s ease-in-out infinite reverse;
+}
+
+@keyframes stage-drift-a {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(6vw, 4vh, 0) scale(1.12); }
+}
+
+@keyframes stage-drift-b {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1.06); }
+  50% { transform: translate3d(-5vw, 6vh, 0) scale(1); }
+}
+
+@keyframes stage-drift-c {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(4vw, -5vh, 0) scale(1.1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .liquid-stage-wash span {
+    animation: none;
+  }
+}

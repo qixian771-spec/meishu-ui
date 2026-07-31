@@ -1,0 +1,4 @@
+/* SPECTRA Full Glassmorphism — shared fonts + token-adjacent base.
+   Runtime colour tokens are injected by applyThemeTokens(). */
+
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Noto+Sans+SC:wght@400;500;700;900&display=swap');

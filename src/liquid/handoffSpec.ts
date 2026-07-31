@@ -11,13 +11,20 @@ export const Z_INDEX_STACK = {
   TOASTS_TOOLTIPS: 100,
 } as const;
 
-export const GLASS_BLUR_BUDGET = {
+/**
+ * Card-surface blur caps (legacy liquid panels / handoff).
+ * Nest depth budget lives in `src/glass/blurBudget` (`BLUR_BUDGET`).
+ */
+export const CARD_BLUR_BUDGET = {
   STANDARD_CARD_BLUR_PX: 14,
   MAX_CARD_BLUR_PX: 16,
   HERO_CARD_BLUR_PX: 26,
   MAX_ACTIVE_SURFACES_PER_SCREEN: 2,
   SOLID_FALLBACK_COLOR: 'rgba(15, 15, 22, 0.92)',
 } as const;
+
+/** @deprecated Prefer `CARD_BLUR_BUDGET`, or nest `BLUR_BUDGET` from `src/glass`. */
+export const GLASS_BLUR_BUDGET = CARD_BLUR_BUDGET;
 
 export const CSS_VARIABLE_MAP = {
   color1: '--liquid-color-1',
@@ -46,15 +53,15 @@ export function isValidBlurRadius(radiusPx: number, isHeroCard = false): boolean
   if (typeof radiusPx !== 'number' || !Number.isFinite(radiusPx) || radiusPx < 0) {
     return false;
   }
-  const maxAllowed = isHeroCard ? GLASS_BLUR_BUDGET.HERO_CARD_BLUR_PX : GLASS_BLUR_BUDGET.MAX_CARD_BLUR_PX;
+  const maxAllowed = isHeroCard ? CARD_BLUR_BUDGET.HERO_CARD_BLUR_PX : CARD_BLUR_BUDGET.MAX_CARD_BLUR_PX;
   return radiusPx <= maxAllowed;
 }
 
 /**
  * Generates style object for glass panels with standard fallback behavior.
  */
-export function getBackdropFilterCSS(blurPx = GLASS_BLUR_BUDGET.STANDARD_CARD_BLUR_PX): React.CSSProperties {
-  const safeBlur = isValidBlurRadius(blurPx) ? blurPx : GLASS_BLUR_BUDGET.STANDARD_CARD_BLUR_PX;
+export function getBackdropFilterCSS(blurPx = CARD_BLUR_BUDGET.STANDARD_CARD_BLUR_PX): React.CSSProperties {
+  const safeBlur = isValidBlurRadius(blurPx) ? blurPx : CARD_BLUR_BUDGET.STANDARD_CARD_BLUR_PX;
   return {
     background: 'rgba(255, 255, 255, 0.06)',
     backdropFilter: `blur(${safeBlur}px)`,

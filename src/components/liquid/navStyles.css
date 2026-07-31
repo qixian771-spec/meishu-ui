@@ -12,7 +12,7 @@
   gap: 12px;
   padding: 10px 16px;
   border-radius: 12px;
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--text-muted, rgba(255, 255, 255, 0.7));
   text-decoration: none;
   font-size: 14px;
   font-weight: 500;
@@ -25,12 +25,12 @@
 }
 
 .nav-item:hover {
-  color: #FFFFFF;
+  color: var(--text-primary, #FFFFFF);
   background: rgba(255, 255, 255, 0.05);
 }
 
 .nav-item.active {
-  color: #0A0A0F;
+  color: var(--text-on-accent, #0A0A0F);
   font-weight: 700;
 }
 

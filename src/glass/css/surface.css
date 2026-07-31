@@ -1,0 +1,303 @@
+
+/* 白瓷 — crystal glass over a cool mid stage (same physics as dark packs:
+   translucent pane + colourful atmosphere, not chalk cards on paper) */
+html[data-surface='light'] {
+  --app-bg:
+    radial-gradient(ellipse 68% 50% at 90% 4%, var(--theme-bloom-a) 0%, transparent 55%),
+    radial-gradient(ellipse 55% 46% at 4% 88%, var(--theme-bloom-b) 0%, transparent 52%),
+    radial-gradient(ellipse 40% 34% at 48% 40%, var(--theme-bloom-c) 0%, transparent 60%),
+    linear-gradient(165deg, #A3B2C4 0%, #8FA0B5 48%, #7E91A8 100%);
+  --mat-glass: rgba(255, 255, 255, 0.42);
+  --text-primary: #0F172A;
+  --text-secondary: #1E293B;
+  --text-muted: #334155;
+  --text-faint: #475569;
+  --text-on-accent: #FFFFFF;
+  --glass-border-rim: color-mix(in srgb, var(--accent-primary) 32%, rgba(15, 23, 42, 0.22));
+  --glass-rim-left: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.82) 32%,
+    color-mix(in srgb, var(--accent-primary) 70%, transparent) 66%,
+    rgba(255, 255, 255, 0.45) 100%
+  );
+  --glass-sheen: linear-gradient(
+    125deg,
+    rgba(255, 255, 255, 0.92) 0%,
+    transparent 26%,
+    transparent 56%,
+    color-mix(in srgb, var(--accent-primary) 14%, transparent) 100%
+  );
+  color-scheme: light;
+}
+
+html[data-surface='light'] .glass-sidebar,
+html[data-surface='light'] .glass-panel-box,
+html[data-surface='light'] .glass-container,
+html[data-surface='light'] .glass-container--quiet,
+html[data-surface='light'] .glass-container--hero {
+  background:
+    var(--glass-sheen),
+    rgba(255, 255, 255, 0.48) !important;
+  border-color: var(--glass-border-rim) !important;
+  backdrop-filter: blur(24px) saturate(1.5) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(1.5) !important;
+  box-shadow:
+    inset 0 1.5px 0 rgba(255, 255, 255, 1),
+    inset 1.5px 0 0 rgba(255, 255, 255, 0.88),
+    inset 0 -22px 40px rgba(15, 23, 42, 0.07),
+    0 1px 0 rgba(255, 255, 255, 0.75),
+    0 28px 56px rgba(15, 23, 42, 0.28),
+    0 10px 22px rgba(15, 23, 42, 0.14),
+    0 0 0 1px color-mix(in srgb, var(--accent-primary) 12%, transparent) !important;
+  color: var(--text-primary);
+}
+
+/* Light studio: wash is pale paint — keep readable, no night vignette */
+html[data-surface='light'] .spectra-card-full-canvas {
+  opacity: 0.34;
+  mix-blend-mode: multiply;
+}
+
+/* Soft porcelain vignette — depth without grey gauze */
+html[data-surface='light'] .glass-container::after {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.18) 0%,
+    color-mix(in srgb, var(--accent-primary) 6%, transparent) 52%,
+    rgba(15, 23, 42, 0.08) 100%
+  );
+}
+
+html[data-surface='light'] .glass-nav-item,
+html[data-surface='light'] .glass-input {
+  color: var(--text-primary) !important;
+}
+
+html[data-surface='light'] .glass-input::placeholder {
+  color: var(--text-muted) !important;
+  opacity: 1;
+}
+
+html[data-surface='light'] .glass-nav-item {
+  color: var(--text-secondary) !important;
+}
+
+html[data-surface='light'] .glass-nav-item:hover,
+html[data-surface='light'] .glass-nav-item.active {
+  color: var(--text-primary) !important;
+  background: color-mix(in srgb, var(--accent-primary) 14%, rgba(255, 255, 255, 0.45));
+  border-color: color-mix(in srgb, var(--accent-primary) 36%, rgba(15, 23, 42, 0.14));
+}
+
+html[data-surface='light'] .glass-nav-item.active {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 2px 0 0 var(--accent-primary),
+    0 0 24px color-mix(in srgb, var(--accent-primary) 36%, transparent);
+}
+
+html[data-surface='light'] .glass-input {
+  background: rgba(255, 255, 255, 0.38);
+  border-color: color-mix(in srgb, var(--accent-primary) 22%, rgba(15, 23, 42, 0.14));
+  backdrop-filter: blur(14px) saturate(1.35);
+  -webkit-backdrop-filter: blur(14px) saturate(1.35);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    0 6px 14px rgba(15, 23, 42, 0.1);
+}
+
+/* Porcelain: feed bloom tokens into drifting wash — same job as dark packs */
+html[data-surface='light'] .liquid-stage-wash span {
+  filter: blur(78px);
+  opacity: 1;
+}
+
+html[data-surface='light'] .liquid-stage-wash span:nth-child(1) {
+  background: radial-gradient(circle, var(--theme-bloom-a) 0%, transparent 68%);
+  opacity: 1;
+}
+
+html[data-surface='light'] .liquid-stage-wash span:nth-child(2) {
+  background: radial-gradient(circle, var(--theme-bloom-b) 0%, transparent 66%);
+  opacity: 1;
+}
+
+html[data-surface='light'] .liquid-stage-wash span:nth-child(3) {
+  background: radial-gradient(circle, var(--theme-bloom-a) 0%, transparent 70%);
+  opacity: 0.9;
+}
+
+html[data-surface='light'] .liquid-stage-wash span:nth-child(4) {
+  opacity: 0.55;
+  background: radial-gradient(circle, var(--theme-bloom-c) 0%, transparent 70%);
+}
+
+/* Status colour arrives as an inline style; darken it on porcelain rather than
+   override it, so custom status colours stay recognisable but readable. */
+html[data-surface='light'] .status-text-green {
+  filter: brightness(0.48) saturate(1.4);
+  font-weight: 700;
+}
+
+html[data-surface='light'] .glass-inset {
+  background:
+    radial-gradient(
+      ellipse 70% 48% at 18% 10%,
+      rgba(255, 255, 255, 0.85) 0%,
+      rgba(255, 255, 255, 0.25) 34%,
+      transparent 58%
+    ),
+    radial-gradient(
+      ellipse 55% 45% at 88% 78%,
+      color-mix(in srgb, var(--accent-primary) 18%, transparent) 0%,
+      transparent 60%
+    ),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.7) 0%,
+      transparent 28%,
+      transparent 58%,
+      color-mix(in srgb, var(--accent-primary) 10%, transparent) 100%
+    ),
+    rgba(255, 255, 255, 0.38);
+  border-color: color-mix(in srgb, var(--accent-primary) 24%, rgba(15, 23, 42, 0.14));
+  box-shadow:
+    inset 0 1.5px 0 rgba(255, 255, 255, 1),
+    inset 1.5px 0 0 rgba(255, 255, 255, 0.75),
+    inset 0 -16px 28px rgba(15, 23, 42, 0.06),
+    0 14px 28px rgba(15, 23, 42, 0.16);
+  backdrop-filter: blur(var(--glass-blur, 14px)) saturate(1.5);
+  -webkit-backdrop-filter: blur(var(--glass-blur, 14px)) saturate(1.5);
+}
+
+html[data-surface='light'] .glass-inset::after {
+  opacity: 0.45;
+}
+
+html[data-surface='light'] .glass-inset--row:hover {
+  background: color-mix(in srgb, var(--accent-primary) 14%, rgba(255, 255, 255, 0.45));
+}
+
+html[data-surface='light'] .glass-pane.is-tint-only,
+html[data-surface='light'] .glass-inset.is-tint-only {
+  background:
+    radial-gradient(
+      ellipse 75% 50% at 16% 8%,
+      rgba(255, 255, 255, 0.95) 0%,
+      rgba(255, 255, 255, 0.4) 30%,
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse 60% 50% at 90% 85%,
+      color-mix(in srgb, var(--accent-primary) 20%, transparent) 0%,
+      transparent 58%
+    ),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.85) 0%,
+      transparent 28%,
+      transparent 55%,
+      color-mix(in srgb, var(--accent-primary) 12%, transparent) 100%
+    ),
+    color-mix(in srgb, var(--accent-primary) 12%, rgba(255, 255, 255, 0.62));
+  border-color: color-mix(in srgb, var(--accent-primary) 30%, rgba(15, 23, 42, 0.16));
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 1),
+    inset 2px 0 0 rgba(255, 255, 255, 0.85),
+    0 12px 26px rgba(15, 23, 42, 0.14);
+}
+
+html[data-surface='light'] .glass-inset.is-tint-only::after {
+  opacity: 0.4;
+}
+
+/* 中国红 — 朱砂为主；金只留顶/左 1px 发丝高光，不抢戏 */
+html[data-accent-theme='cinnabar'] {
+  --glass-border-rim: color-mix(in srgb, var(--accent-primary) 70%, rgba(255, 255, 255, 0.22));
+  --glass-rim-left: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--wash-glow-rim) 55%, transparent) 0%,
+    color-mix(in srgb, var(--accent-primary) 40%, transparent) 55%,
+    color-mix(in srgb, var(--accent-primary) 18%, transparent) 100%
+  );
+  --glass-sheen: linear-gradient(
+    125deg,
+    color-mix(in srgb, var(--wash-glow-rim) 12%, transparent) 0%,
+    transparent 18%,
+    transparent 64%,
+    color-mix(in srgb, var(--accent-primary) 12%, transparent) 100%
+  );
+  --app-bg:
+    radial-gradient(ellipse 55% 40% at 85% 15%, var(--theme-bloom-a) 0%, transparent 55%),
+    radial-gradient(ellipse 45% 35% at 10% 80%, var(--theme-bloom-b) 0%, transparent 50%),
+    radial-gradient(ellipse 40% 30% at 50% 50%, var(--theme-bloom-c) 0%, transparent 60%),
+    var(--spectra-dark-bg);
+}
+
+html[data-accent-theme='cinnabar'] .glass-sidebar,
+html[data-accent-theme='cinnabar'] .glass-panel-box,
+html[data-accent-theme='cinnabar'] .glass-container,
+html[data-accent-theme='cinnabar'] .glass-container--quiet,
+html[data-accent-theme='cinnabar'] .glass-container--hero {
+  border: 1px solid var(--glass-border-rim) !important;
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--wash-glow-rim) 38%, transparent),
+    inset 1px 0 0 color-mix(in srgb, var(--wash-mid-rim) 18%, transparent),
+    inset 0 -16px 28px rgba(6, 4, 4, 0.38),
+    0 12px 24px rgba(4, 2, 2, 0.5),
+    0 22px 40px rgba(6, 2, 2, 0.4) !important;
+}
+
+html[data-accent-theme='cinnabar'] .glass-container::after {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--wash-glow-rim) 4%, transparent) 0%,
+    transparent 20%,
+    rgba(10, 4, 4, 0.22) 100%
+  );
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--wash-glow-rim) 32%, transparent);
+  z-index: 5;
+}
+
+/* 细金条：仅顶段略金，下段回朱红 */
+html[data-accent-theme='cinnabar'] .glass-sidebar::before,
+html[data-accent-theme='cinnabar'] .glass-panel-box::after,
+html[data-accent-theme='cinnabar'] .glass-container::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 16%;
+  bottom: 16%;
+  width: 1px;
+  border-radius: 1px;
+  background: var(--glass-rim-left);
+  box-shadow: none;
+  opacity: 0.75;
+  pointer-events: none;
+  z-index: 6;
+}
+
+html[data-accent-theme='cinnabar'] .glass-nav-item.active {
+  border: 1px solid color-mix(in srgb, var(--accent-primary) 55%, rgba(255, 255, 255, 0.18)) !important;
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--wash-glow-rim) 25%, transparent),
+    inset 2px 0 0 var(--accent-primary),
+    0 0 16px color-mix(in srgb, var(--accent-primary) 24%, transparent) !important;
+}
+
+html[data-accent-theme='cinnabar'] .glass-inset {
+  border-color: color-mix(in srgb, var(--accent-primary) 28%, rgba(255, 255, 255, 0.16));
+  box-shadow:
+    inset 0 1.5px 0 color-mix(in srgb, var(--wash-glow-rim) 40%, rgba(255, 255, 255, 0.35)),
+    inset 1.5px 0 0 color-mix(in srgb, var(--wash-mid-rim) 22%, rgba(255, 255, 255, 0.14)),
+    inset 0 -18px 28px rgba(4, 2, 2, 0.34),
+    inset 0 20px 36px rgba(255, 255, 255, 0.03),
+    0 12px 28px rgba(4, 2, 2, 0.42),
+    0 4px 10px color-mix(in srgb, var(--accent-primary) 14%, transparent);
+}
+
+html[data-accent-theme='cinnabar'] .glass-input {
+  border-color: color-mix(in srgb, var(--accent-primary) 26%, rgba(255, 255, 255, 0.12));
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--wash-glow-rim) 18%, transparent);
+}

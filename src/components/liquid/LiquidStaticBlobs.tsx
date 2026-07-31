@@ -5,10 +5,11 @@ export interface LiquidStaticBlobsProps {
 }
 
 /**
- * Static multi-layer radial gradient blob fallback for Ardot canvas & screenshot alignment (DESIGN-05).
+ * Static multi-layer radial wash fallback for Ardot / screenshot alignment.
+ * Graphite + Klein cold — not purple party blobs.
  */
 export function LiquidStaticBlobs({ className = '' }: LiquidStaticBlobsProps) {
-  const { violet, blue, green } = ARDOT_TOKEN_MAP.brandColors;
+  const { graphite, klein, sky } = ARDOT_TOKEN_MAP.brandColors;
 
   return (
     <div
@@ -30,7 +31,7 @@ export function LiquidStaticBlobs({ className = '' }: LiquidStaticBlobsProps) {
           width: '55vw',
           height: '55vw',
           borderRadius: '50%',
-          background: `radial-gradient(circle, ${violet}aa 0%, transparent 70%)`,
+          background: `radial-gradient(circle, ${graphite}cc 0%, transparent 70%)`,
           filter: 'blur(50px)',
         }}
       />
@@ -42,7 +43,7 @@ export function LiquidStaticBlobs({ className = '' }: LiquidStaticBlobsProps) {
           width: '50vw',
           height: '50vw',
           borderRadius: '50%',
-          background: `radial-gradient(circle, ${blue}aa 0%, transparent 70%)`,
+          background: `radial-gradient(circle, ${klein}88 0%, transparent 70%)`,
           filter: 'blur(50px)',
         }}
       />
@@ -54,7 +55,7 @@ export function LiquidStaticBlobs({ className = '' }: LiquidStaticBlobsProps) {
           width: '60vw',
           height: '60vw',
           borderRadius: '50%',
-          background: `radial-gradient(circle, ${green}88 0%, transparent 70%)`,
+          background: `radial-gradient(circle, ${sky}66 0%, transparent 70%)`,
           filter: 'blur(50px)',
         }}
       />

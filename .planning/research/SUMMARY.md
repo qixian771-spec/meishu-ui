@@ -26,7 +26,7 @@ React 19 + CSS variables + `backdrop-filter` primitives + Vitest contracts. Opti
 
 ### Architecture Approach
 
-`packages/glass` (or `src/glass/`) + `skills/clauseos-glass` + demo App. Layers: atmosphere → shell → pane → inset → content. Theme provider drives CSS vars. Split monolothic `spectraGlass.css` into framework vs demo.
+`packages/glass` (or `src/glass/`) + `skill/meishu-ui` + demo App. Layers: atmosphere → shell → pane → inset → content. Theme provider drives CSS vars. Split monolothic `spectraGlass.css` into framework vs demo.
 
 ### Critical Pitfalls
 

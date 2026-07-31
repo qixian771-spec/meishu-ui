@@ -35,8 +35,8 @@ export function LiquidAvatar({
             style={{
               width: size - 4,
               height: size - 4,
-              background: '#0A0A0F',
-              color: '#FFFFFF',
+              background: 'var(--accent-primary, #0A0A0F)',
+              color: 'var(--text-on-accent, #FFFFFF)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',

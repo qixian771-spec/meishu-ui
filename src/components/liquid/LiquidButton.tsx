@@ -21,8 +21,8 @@ export function LiquidButton({
         className={`liquid-button-secondary ${className}`}
         style={{
           background: 'rgba(255, 255, 255, 0.08)',
-          border: '1px solid rgba(167, 139, 250, 0.35)',
-          color: '#FFFFFF',
+          border: '1px solid var(--accent-primary-border, rgba(167, 139, 250, 0.35))',
+          color: 'var(--text-primary, #FFFFFF)',
           fontWeight: 600,
           borderRadius: 12,
           padding: '10px 20px',

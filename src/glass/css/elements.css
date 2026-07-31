@@ -1,0 +1,142 @@
+
+/* SpectraGlassCard HUD overlays */
+/* Wash is paint on glass, not a lid — keep it thin enough that the drifting
+   stage colour still reads through the card. */
+.spectra-card-full-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.45;
+  border-radius: inherit;
+}
+
+.glass-container--hero .spectra-card-full-canvas {
+  opacity: 0.6;
+}
+
+.spectra-card-header {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 26px 28px 0;
+}
+
+.spectra-card-body {
+  position: relative;
+  z-index: 4;
+  padding: 8px 28px 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.spectra-card-footer {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 28px 26px;
+  margin-top: auto;
+}
+
+.hud-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 1.2px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.hud-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  box-shadow: none;
+}
+
+.card-title-lg {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.15px;
+  color: var(--text-secondary);
+}
+
+.card-subtitle {
+  font-size: 12px;
+  color: var(--text-faint);
+  margin-top: 6px;
+  font-weight: 400;
+}
+
+/* Typography as sculpture */
+.metric-number {
+  font-size: 56px;
+  font-weight: 500;
+  letter-spacing: -2.5px;
+  line-height: 1;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.glass-stage--quiet .metric-number {
+  font-size: 40px;
+  letter-spacing: -1.6px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.metric-caption {
+  margin-top: 10px;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-faint);
+  letter-spacing: 0.2px;
+}
+
+.status-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+}
+
+.status-dot-green {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.status-text-green {
+  font-weight: 800;
+}
+
+.owner-avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--accent-primary) 18%, rgba(255, 255, 255, 0.08));
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-secondary);
+}

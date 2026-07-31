@@ -14,7 +14,7 @@ packages/glass/          (or src/glass/ until extract)
   motion/                optional wash / ultrathink adapters
   index.ts               public API
 
-skills/clauseos-glass/
+skill/meishu-ui/
   SKILL.md               when to use, hard rules, recipes
   references/            layer-model.md, theme-packs.md, do-dont.md
 

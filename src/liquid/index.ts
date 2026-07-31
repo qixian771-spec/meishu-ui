@@ -13,9 +13,12 @@ export { themeToUniforms, hexToVec3 } from './themeBridge';
 export type { LiquidTheme, LiquidUniforms, LiquidCanvasOptions, QualityTier } from './types';
 export {
   Z_INDEX_STACK,
+  CARD_BLUR_BUDGET,
   GLASS_BLUR_BUDGET,
   CSS_VARIABLE_MAP,
   POSTER_PIPELINE_SPEC,
   isValidBlurRadius,
   getBackdropFilterCSS,
 } from './handoffSpec';
+/** Nest depth blur budget (framework). Distinct from CARD_BLUR_BUDGET. */
+export { BLUR_BUDGET as NEST_BLUR_BUDGET } from '../glass/blurBudget';

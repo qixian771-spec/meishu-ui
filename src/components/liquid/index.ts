@@ -8,4 +8,8 @@ export { LiquidBadge } from './LiquidBadge';
 export type { LiquidBadgeProps } from './LiquidBadge';
 export { LiquidStaticBlobs } from './LiquidStaticBlobs';
 export type { LiquidStaticBlobsProps } from './LiquidStaticBlobs';
+export { SpectraGlassCard } from './SpectraGlassCard';
+export type { SpectraGlassCardProps, GlassCardVariant } from './SpectraGlassCard';
+export type { GlassWashId, WashRole } from '../../liquid/glassWash';
+export type { AccentThemeId } from '../../glass';
 export { ARDOT_TOKEN_MAP } from './ardotTokenMap';

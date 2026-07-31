@@ -22,8 +22,8 @@ export function LiquidLogo({ size = 36, className = '', title = '灵犀 Nexus' }
           height={iconSize}
           viewBox="0 0 24 24"
           fill="none"
-          stroke="#0A0A0F"
-          strokeWidth="2.5"
+          stroke="var(--text-on-accent, #F8FAFC)"
+          strokeWidth="2.2"
           strokeLinecap="round"
           strokeLinejoin="round"
         >
@@ -31,7 +31,15 @@ export function LiquidLogo({ size = 36, className = '', title = '灵犀 Nexus' }
         </svg>
       </div>
       {title && (
-        <span style={{ fontSize: size * 0.5, fontWeight: 700, color: '#FFFFFF', letterSpacing: '0.5px' }}>
+        <span
+          className="liquid-logo-title"
+          style={{
+            fontSize: size * 0.48,
+            fontWeight: 600,
+            color: 'var(--text-primary, #F1F5F9)',
+            letterSpacing: '-0.2px',
+          }}
+        >
           {title}
         </span>
       )}

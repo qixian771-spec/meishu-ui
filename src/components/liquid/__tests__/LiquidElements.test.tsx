@@ -21,7 +21,7 @@ describe('Liquid Signature Elements', () => {
     expect(getByText('AL')).toBeInTheDocument();
   });
 
-  it('renders LiquidButton with high contrast dark text #0A0A0F', () => {
+  it('renders LiquidButton with signature class', () => {
     const { getByRole } = render(<LiquidButton>新建任务</LiquidButton>);
     const button = getByRole('button');
     expect(button).toHaveTextContent('新建任务');

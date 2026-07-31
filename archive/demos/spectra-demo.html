@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPECTRA 100% 物理 3D 玻璃全覆盖系统 — 灵犀 Nexus</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #060913;
+    color: #FFFFFF;
+    font-family: 'Inter', 'Noto Sans SC', system-ui, sans-serif;
+    min-height: 100vh;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .app-container {
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* 3D Glass Sidebar */
+  .glass-sidebar {
+    width: 270px;
+    padding: 32px 22px;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(36px) saturate(1.8);
+    -webkit-backdrop-filter: blur(36px) saturate(1.8);
+    border-right: 1.5px solid rgba(255, 255, 255, 0.22);
+    box-shadow: inset -1.5px 0 4px rgba(255, 255, 255, 0.2), 10px 0 40px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 10;
+  }
+
+  .brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 36px;
+  }
+  .logo-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #002FA7, #38BDF8 50%, #4ADE80);
+    box-shadow: 0 0 16px rgba(56, 189, 248, 0.4);
+  }
+  .brand-title {
+    font-size: 20px;
+    font-weight: 900;
+    letter-spacing: 1px;
+  }
+
+  .glass-nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 13px 18px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #94A3B8;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    width: 100%;
+    text-align: left;
+    margin-bottom: 10px;
+    backdrop-filter: blur(12px);
+  }
+  .glass-nav-btn:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.3); color: #FFF; transform: translateX(4px); }
+  .glass-nav-btn.active {
+    background: rgba(56, 189, 248, 0.2);
+    border: 1.2px solid rgba(56, 189, 248, 0.5);
+    color: #FFF;
+    box-shadow: inset 1px 1px 3px rgba(255, 255, 255, 0.4), 0 0 20px rgba(56, 189, 248, 0.35);
+  }
+
+  .main-stage {
+    flex: 1;
+    padding: 36px 44px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    overflow-y: auto;
+  }
+
+  .header-tag {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.8px;
+    color: #38BDF8;
+    font-family: monospace;
+  }
+  .header-title {
+    font-size: 28px;
+    font-weight: 900;
+    margin-top: 4px;
+    letter-spacing: -0.5px;
+  }
+
+  /* 3D Glass Container Panel */
+  .glass-panel-box {
+    border-radius: 24px;
+    background: rgba(15, 23, 42, 0.72);
+    backdrop-filter: blur(32px);
+    border: 1.5px solid rgba(255, 255, 255, 0.28);
+    box-shadow: inset 1.5px 2px 5px rgba(255, 255, 255, 0.35), 0 24px 60px rgba(0, 0, 0, 0.6);
+    padding: 28px;
+  }
+
+  /* 3D Glass Card Container */
+  .spectra-rect-card {
+    position: relative;
+    width: 100%;
+    height: 210px;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(28px) saturate(1.5);
+    -webkit-backdrop-filter: blur(28px) saturate(1.5);
+    border: 1.2px solid rgba(255, 255, 255, 0.48);
+    box-shadow:
+      inset 1.5px 2px 5px 0 rgba(255, 255, 255, 0.35),
+      inset -1.5px -2px 6px 0 rgba(0, 0, 0, 0.5),
+      0 24px 60px -12px rgba(0, 0, 0, 0.65);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.15s ease-out, box-shadow 0.2s ease;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .glass-rim-overlay {
+    position: absolute;
+    inset: 0;
+    border-radius: 22px;
+    pointer-events: none;
+    z-index: 5;
+    background: linear-gradient(135deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.12) 28%, rgba(255,255,255,0) 65%);
+  }
+
+  .card-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 22px;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .card-header-overlay {
+    position: relative;
+    z-index: 4;
+    padding: 22px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.92) 0%, rgba(15, 23, 42, 0.4) 65%, rgba(15, 23, 42, 0) 100%);
+    pointer-events: none;
+  }
+
+  .card-footer-overlay {
+    position: relative;
+    z-index: 4;
+    padding: 18px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(0deg, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.5) 70%, rgba(15, 23, 42, 0) 100%);
+    pointer-events: none;
+  }
+
+  .action-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #000;
+    color: #FFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 500;
+    border: 1px solid rgba(56, 189, 248, 0.5);
+    box-shadow: 0 0 14px rgba(56, 189, 248, 0.4);
+  }
+
+  /* 3D Glass Interactive List Item */
+  .glass-list-item {
+    padding: 16px 20px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1.2px solid rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(16px);
+    transition: all 0.2s ease;
+    cursor: pointer;
+    margin-bottom: 12px;
+  }
+  .glass-list-item:hover, .glass-list-item.selected {
+    background: rgba(56, 189, 248, 0.18);
+    border-color: rgba(56, 189, 248, 0.5);
+    box-shadow: inset 1px 1.5px 3px rgba(255, 255, 255, 0.4), 0 8px 24px rgba(56, 189, 248, 0.2);
+    transform: translateY(-2px);
+  }
+
+  .grid-2x2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .view-panel { display: none; }
+  .view-panel.active { display: block; }
+</style>
+</head>
+<body>
+
+<div class="app-container">
+  <!-- 3D Glass Sidebar -->
+  <aside class="glass-sidebar">
+    <div>
+      <div class="brand-logo">
+        <div class="logo-icon"></div>
+        <div class="brand-title">灵犀 Nexus</div>
+      </div>
+
+      <div style="font-size: 11px; font-weight: 800; letter-spacing: 1.8px; color: #94A3B8; margin-bottom: 16px; text-transform: uppercase;">
+        100% 物理 3D 玻璃工作区
+      </div>
+
+      <nav>
+        <button class="glass-nav-btn active" onclick="showTab('dashboard', this)">▣ 仪表盘概览</button>
+        <button class="glass-nav-btn" onclick="showTab('tasks', this)">☰ 任务与详情</button>
+        <button class="glass-nav-btn" onclick="showTab('settings', this)">⚙ 偏好与设置</button>
+        <button class="glass-nav-btn" onclick="showTab('login', this)">🔒 账号与登录</button>
+      </nav>
+    </div>
+
+    <!-- User Profile Glass Item -->
+    <div class="glass-list-item" style="padding: 12px 14px; border-radius: 16px; background: rgba(255,255,255,0.06); border: 1.2px solid rgba(255,255,255,0.2); backdrop-filter: blur(16px); display: flex; align-items: center; gap: 12px;">
+      <div style="width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, #002FA7, #38BDF8); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px;">AC</div>
+      <div>
+        <div style="font-size: 14px; font-weight: 700;">Alex Chen</div>
+        <div style="font-size: 11px; color: #94A3B8;">alex@lingxi-nexus.com</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Stage -->
+  <main class="main-stage">
+    <!-- Header -->
+    <header style="display: flex; justify-content: space-between; align-items: center;">
+      <div>
+        <div class="header-tag">01 // 100% PHYSICAL GLASS COVERAGE</div>
+        <h1 class="header-title" id="page-title">仪表盘概览 (Dashboard Overview)</h1>
+      </div>
+      <span style="font-size: 12px; font-weight: 800; color: #4ADE80; padding: 6px 14px; background: rgba(74,222,128,0.15); border: 0.5px solid rgba(74,222,128,0.35); border-radius: 9999px;">
+        ● 全量 UI 3D 玻璃物理沉浸
+      </span>
+    </header>
+
+    <!-- Panel 1: Dashboard -->
+    <div id="tab-dashboard" class="view-panel active">
+      <div class="grid-2x2">
+        <div class="spectra-rect-card">
+          <div class="glass-rim-overlay"></div>
+          <canvas class="card-canvas"></canvas>
+          <div class="card-header-overlay">
+            <div>
+              <div style="font-size: 10px; color: #38BDF8; letter-spacing: 1.5px; font-family: monospace; margin-bottom: 4px;">01 // TODAY TASKS</div>
+              <div style="font-size: 22px; font-weight: 800; letter-spacing: 2px;">今日待办事项</div>
+            </div>
+            <div class="action-btn">→</div>
+          </div>
+          <div style="position: relative; z-index: 4; padding: 0 24px; font-size: 32px; font-weight: 900; color: #38BDF8;">12 项运行中</div>
+          <div class="card-footer-overlay">
+            <div style="font-family: monospace; font-size: 13px; color: #E2E8F0;">12 TASKS RUNNING</div>
+            <div style="font-size: 11px; color: #38BDF8; padding: 3px 10px; background: rgba(56,189,248,0.15); border-radius: 9999px;">IN PROGRESS</div>
+          </div>
+        </div>
+
+        <div class="spectra-rect-card">
+          <div class="glass-rim-overlay"></div>
+          <canvas class="card-canvas"></canvas>
+          <div class="card-header-overlay">
+            <div>
+              <div style="font-size: 10px; color: #4ADE80; letter-spacing: 1.5px; font-family: monospace; margin-bottom: 4px;">02 // DELIVERIES</div>
+              <div style="font-size: 22px; font-weight: 800; letter-spacing: 2px;">里程碑交付</div>
+            </div>
+            <div class="action-btn">→</div>
+          </div>
+          <div style="position: relative; z-index: 4; padding: 0 24px; font-size: 32px; font-weight: 900; color: #4ADE80;">56 项 100% 通过</div>
+          <div class="card-footer-overlay">
+            <div style="font-family: monospace; font-size: 13px; color: #E2E8F0;">56 DELIVERIES PASS</div>
+            <div style="font-size: 11px; color: #4ADE80; padding: 3px 10px; background: rgba(74,222,128,0.15); border-radius: 9999px;">PASSED</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel 2: Tasks (100% 3D Glass Container & List Items) -->
+    <div id="tab-tasks" class="view-panel">
+      <div style="display: grid; grid-template-columns: 1fr 400px; gap: 24px;">
+        <!-- Glass Container Panel -->
+        <div class="glass-panel-box">
+          <div style="font-size: 11px; font-weight: 800; letter-spacing: 1.8px; color: #38BDF8; font-family: monospace; margin-bottom: 16px;">
+            ● TASK LIST // 全局任务清单 (3D 玻璃界面全覆盖)
+          </div>
+
+          <div class="glass-list-item selected">
+            <div style="font-size: 16px; font-weight: 700;">SPECTRA 3D 玻璃边缘高光精修</div>
+            <div style="font-size: 12px; color: #94A3B8; margin-top: 4px;">负责人: 高见远 (Architect)</div>
+          </div>
+
+          <div class="glass-list-item">
+            <div style="font-size: 16px; font-weight: 700;">纯光晕交互系统优化</div>
+            <div style="font-size: 12px; color: #94A3B8; margin-top: 4px;">负责人: 寇豆码 (Engineer)</div>
+          </div>
+
+          <div class="glass-list-item">
+            <div style="font-size: 16px; font-weight: 700;">全站 100% 3D 玻璃材质覆盖</div>
+            <div style="font-size: 12px; color: #94A3B8; margin-top: 4px;">负责人: 严过关 (QA)</div>
+          </div>
+        </div>
+
+        <!-- Glass Interactive Card -->
+        <div class="spectra-rect-card" style="height: 380px;">
+          <div class="glass-rim-overlay"></div>
+          <canvas class="card-canvas"></canvas>
+          <div class="card-header-overlay">
+            <div>
+              <div style="font-size: 10px; color: #38BDF8; font-family: monospace;">TASK DETAILS</div>
+              <div style="font-size: 20px; font-weight: 800;">玻璃边缘高光精修</div>
+            </div>
+            <div class="action-btn">→</div>
+          </div>
+          <div style="position: relative; z-index: 4; padding: 0 24px; font-size: 13px; color: #94A3B8;">
+            已全面采用 3D 高折射物理玻璃光弧与纯光晕交互系统，全网全覆盖。
+          </div>
+          <div class="card-footer-overlay">
+            <div style="font-family: monospace; font-size: 13px;">EST: 0.5 SESSIONS</div>
+            <div style="font-size: 11px; color: #4ADE80;">ACTIVE</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel 3: Settings -->
+    <div id="tab-settings" class="view-panel">
+      <div class="grid-2x2">
+        <div class="spectra-rect-card">
+          <div class="glass-rim-overlay"></div>
+          <canvas class="card-canvas"></canvas>
+          <div class="card-header-overlay">
+            <div>
+              <div style="font-size: 10px; color: #38BDF8; font-family: monospace;">SYSTEM PERFORMANCE</div>
+              <div style="font-size: 22px; font-weight: 800;">3D 玻璃与光晕交互引擎</div>
+            </div>
+            <div class="action-btn">→</div>
+          </div>
+          <div class="card-footer-overlay">
+            <div style="font-family: monospace; font-size: 13px;">DPR: 1.0x</div>
+            <div style="font-size: 11px; color: #4ADE80;">AUTO T1</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel 4: Login -->
+    <div id="tab-login" class="view-panel">
+      <div style="max-width: 440px; margin: 20px auto;">
+        <div class="spectra-rect-card" style="height: 340px;">
+          <div class="glass-rim-overlay"></div>
+          <canvas class="card-canvas"></canvas>
+          <div class="card-header-overlay">
+            <div>
+              <div style="font-size: 10px; color: #38BDF8; font-family: monospace;">AUTHENTICATION</div>
+              <div style="font-size: 22px; font-weight: 800;">灵犀 Nexus 3D 玻璃登录</div>
+            </div>
+            <div class="action-btn">→</div>
+          </div>
+          <div style="position: relative; z-index: 4; padding: 0 24px; display: flex; flex-direction: column; gap: 12px;">
+            <input type="text" value="Alex Chen" style="padding: 12px 16px; border-radius: 14px; background: rgba(0,0,0,0.5); border: 1.2px solid rgba(255,255,255,0.25); color: #FFF; backdrop-filter: blur(12px);" readonly />
+            <input type="password" value="••••••••" style="padding: 12px 16px; border-radius: 14px; background: rgba(0,0,0,0.5); border: 1.2px solid rgba(255,255,255,0.25); color: #FFF; backdrop-filter: blur(12px);" readonly />
+          </div>
+          <div class="card-footer-overlay">
+            <div style="font-family: monospace; font-size: 13px;">SECURED ENCRYPTED</div>
+            <div style="font-size: 11px; color: #4ADE80;">READY</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+function showTab(tabId, btnEl) {
+  document.querySelectorAll('.view-panel').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.glass-nav-btn').forEach(function(b) { b.classList.remove('active'); });
+  document.getElementById('tab-' + tabId).classList.add('active');
+  btnEl.classList.add('active');
+
+  var titles = {
+    dashboard: '仪表盘概览 (Dashboard Overview)',
+    tasks: '任务与详情 (Tasks & Details)',
+    settings: '偏好与设置 (System Settings)',
+    login: '账号与登录 (Authentication)'
+  };
+  document.getElementById('page-title').innerText = titles[tabId];
+}
+
+/**
+ * SPECTRA Pure Glow Canvas Renderer
+ * 3 Layers Only — Zero Particles!
+ * Layer 1: Crystal Violet & Ink Radial Gradient (mouse-tracking center)
+ * Layer 2: Water-Filling Progress Sweep (left-to-right)
+ * Layer 3: Interactive Mouse Focal Glow Aura
+ */
+(function initCanvases() {
+  document.querySelectorAll('.spectra-rect-card').forEach(function(card) {
+    var canvas = card.querySelector('.card-canvas');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    var time = 0;
+    var isHovered = false;
+    var isVisible = true;
+
+    // Smooth mouse tracking center
+    var center = { x: 0, y: 0 };
+    var target = { x: 0, y: 0 };
+
+    function initCenter() {
+      var w = canvas.width || card.clientWidth || 380;
+      var h = canvas.height || card.clientHeight || 210;
+      center.x = w * 0.65;
+      center.y = h * 0.5;
+      target.x = center.x;
+      target.y = center.y;
+    }
+
+    // Mouse interaction handlers
+    card.addEventListener('mouseenter', function() {
+      isHovered = true;
+    });
+
+    card.addEventListener('mousemove', function(e) {
+      var rect = card.getBoundingClientRect();
+      target.x = e.clientX - rect.left;
+      target.y = e.clientY - rect.top;
+
+      // 3D Parallax Tilt Effect
+      var tiltX = ((e.clientY - rect.top) / rect.height - 0.5) * -6;
+      var tiltY = ((e.clientX - rect.left) / rect.width - 0.5) * 6;
+      card.style.transform = 'perspective(800px) rotateX(' + tiltX + 'deg) rotateY(' + tiltY + 'deg) translateY(-3px)';
+    });
+
+    card.addEventListener('mouseleave', function() {
+      isHovered = false;
+      var w = canvas.width || 380;
+      var h = canvas.height || 210;
+      target.x = w * 0.65;
+      target.y = h * 0.5;
+      card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+    });
+
+    // IntersectionObserver for 0% CPU offscreen pausing
+    if (window.IntersectionObserver) {
+      var observer = new IntersectionObserver(function(entries) {
+        isVisible = entries[0].isIntersecting;
+      }, { threshold: 0.01 });
+      observer.observe(card);
+    }
+
+    initCenter();
+
+    function render() {
+      if (isVisible) {
+        time += 0.016;
+
+        var currentW = card.clientWidth || 380;
+        var currentH = card.clientHeight || 210;
+        if (canvas.width !== currentW || canvas.height !== currentH) {
+          canvas.width = currentW;
+          canvas.height = currentH;
+        }
+        var w = canvas.width;
+        var h = canvas.height;
+
+        ctx.clearRect(0, 0, w, h);
+
+        // Smooth interpolation for mouse center
+        center.x += (target.x - center.x) * 0.12;
+        center.y += (target.y - center.y) * 0.12;
+
+        // Layer 1: Sparkling Ultra-Clear Crystal Background Radial Gradient
+        var grad = ctx.createRadialGradient(center.x, center.y, 8, center.x, center.y, 175);
+        grad.addColorStop(0, 'rgba(6, 13, 34, 0.96)');
+        grad.addColorStop(0.35, 'rgba(124, 58, 237, 0.88)');   // Royal Violet #7C3AED
+        grad.addColorStop(0.68, 'rgba(0, 47, 167, 0.90)');     // Deep Klein Blue Ink #002FA7
+        grad.addColorStop(0.88, 'rgba(192, 132, 252, 0.45)');   // Soft Lavender #C084FC
+        grad.addColorStop(1, 'rgba(15, 23, 42, 0.95)');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, w, h);
+
+        // Layer 2: Water-Filling Progress Sweep (Left to Right Progressive Filling Motion)
+        var fillProgress = (time * 0.22) % 1.25 - 0.1;
+        var sweepX = w * fillProgress;
+        var sweepY = h * 0.5;
+        var sweepGrad = ctx.createRadialGradient(sweepX, sweepY, 8, sweepX, sweepY, w * 0.45);
+        sweepGrad.addColorStop(0, 'rgba(244, 114, 182, 0.7)');     // Glowing Magenta Wave Front #F472B6
+        sweepGrad.addColorStop(0.35, 'rgba(192, 132, 252, 0.45)'); // Soft Violet
+        sweepGrad.addColorStop(0.7, 'rgba(56, 189, 248, 0.25)');   // Cyan Refraction
+        sweepGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        ctx.fillStyle = sweepGrad;
+        ctx.fillRect(0, 0, w, h);
+
+        // Layer 3: Pure Interactive Mouse Focal Glow Aura (Zero Particles!)
+        var mouseGlowRadius = isHovered ? 140 : 90;
+        var mouseGlowIntensity = isHovered ? 0.65 : 0.25;
+        var mouseGrad = ctx.createRadialGradient(center.x, center.y, 4, center.x, center.y, mouseGlowRadius);
+        mouseGrad.addColorStop(0, 'rgba(56, 189, 248, ' + mouseGlowIntensity + ')');
+        mouseGrad.addColorStop(0.4, 'rgba(168, 85, 247, ' + (mouseGlowIntensity * 0.6) + ')');
+        mouseGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        ctx.fillStyle = mouseGrad;
+        ctx.fillRect(0, 0, w, h);
+
+        ctx.globalAlpha = 1.0;
+      }
+      requestAnimationFrame(render);
+    }
+    render();
+  });
+})();
+</script>
+</body>
+</html>

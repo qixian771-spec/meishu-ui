@@ -30,7 +30,7 @@
 | Channel | Format | Notes |
 |---------|--------|-------|
 | Component framework | `packages/glass` or `src/glass/` + clear exports | Copy-kit first; npm publish optional later |
-| Cursor Skill | `.cursor/skills/clauseos-glass/SKILL.md` (+ references) | Agent-facing recipes |
+| Cursor Skill | `skill/meishu-ui/SKILL.md` (+ references) | Agent-facing recipes |
 | Claude Skill | `~/.claude/skills/...` or project `.claude/skills/` | Same content, dual install docs |
 | Tokens | CSS variables on `[data-accent-theme]` | Single source for App + Skill examples |
 
