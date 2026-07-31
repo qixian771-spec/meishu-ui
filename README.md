@@ -1,101 +1,83 @@
 # meishu-ui
 
+**在线画廊（点开即看，不用另找链接）：**  
+### 👉 https://qixian771-spec.github.io/meishu-ui/
+
 <p align="center">
   <a href="https://qixian771-spec.github.io/meishu-ui/">
-    <img src="docs/media/gallery.png" alt="meishu-ui gallery — full-screen glass art system" width="100%" />
+    <img src="https://img.shields.io/badge/%E5%9C%A8%E7%BA%BF%E7%94%BB%E5%BB%8A-Live%20Demo-4ADE80?style=for-the-badge&logo=github" alt="在线画廊 Live Demo" />
   </a>
 </p>
 
 <p align="center">
-  <strong>Full-screen glass art system</strong> — tokens + Skill contract + React/CSS + Remotion precomposed.<br/>
-  满屏玻璃美术资产：真身是 <strong>token + 契约</strong>；Web 走 <code>Glass*</code>，视频走 <code>Precomposed*</code>。
+  <a href="https://qixian771-spec.github.io/meishu-ui/">
+    <img src="docs/media/gallery.png" alt="点击进入在线画廊 — meishu-ui glass art gallery" width="100%" />
+  </a>
 </p>
 
+<p align="center"><b>↑ 点击上图 = 打开在线画廊</b>（满屏玻璃 · 七套色 · 嵌套预算）</p>
+
+---
+
+满屏**玻璃美术系统**：真身是 **token + 契约（Skill）**；Web 用 `Glass*`（`backdrop-filter`），视频 / Remotion 用 `Precomposed*`。
+
+Full-screen **glass art system** — tokens + Skill + React/CSS live glass + Remotion precomposed.
+
 <p align="center">
-  <a href="https://qixian771-spec.github.io/meishu-ui/"><img src="https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-4ADE80?style=flat-square" alt="Live Demo" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue?style=flat-square" alt="MIT" /></a>
   <a href="https://github.com/qixian771-spec/meishu-ui/releases/tag/v2.1"><img src="https://img.shields.io/badge/version-v2.1-informational?style=flat-square" alt="v2.1" /></a>
   <img src="https://img.shields.io/badge/tests-129%20passing-success?style=flat-square" alt="tests" />
 </p>
 
-<p align="center">
-  <a href="https://qixian771-spec.github.io/meishu-ui/"><b>Live Demo</b></a> ·
-  <a href="docs/FRAMEWORK.md">Framework</a> ·
-  <a href="skill/meishu-ui/">Skill</a> ·
-  <a href="src/glass/README.md">src/glass</a>
-</p>
+| 看效果 | 读契约 | 拷代码 |
+|--------|--------|--------|
+| [**在线画廊**](https://qixian771-spec.github.io/meishu-ui/) | [Skill `meishu-ui`](skill/meishu-ui/) · [FRAMEWORK](docs/FRAMEWORK.md) | [`src/glass`](src/glass/README.md) |
 
-> Demo gallery is an **acceptance stage**, not a product UI.
+> 仓库里的页面是**验收画廊**，不是某个产品 App。
 
-## Quick start
+---
+
+## 30 秒本地跑
 
 ```bash
 npm install
-npm run dev          # http://localhost:5173
-npm test
-npm run build
+npm run dev    # http://localhost:5173  ← 和线上画廊同一套
 ```
 
-## Remotion (v2.1)
-
-```bash
-npm run remotion:studio
-```
-
-Composition: `PrecomposedDemo`.
-
-## Integrate (Web)
+## 接入（Web）
 
 ```ts
 import {
-  applyThemeTokens,
-  resolveThemeTokens,
-  GlassAtmosphere,
-  GlassShell,
-  GlassPane,
-  GlassInset,
+  applyThemeTokens, resolveThemeTokens,
+  GlassAtmosphere, GlassShell, GlassPane, GlassInset,
 } from './src/glass';
 import './src/glass/css/index.css';
 
 applyThemeTokens(resolveThemeTokens('ref123'));
 ```
 
-Precomposed / video: see [`skill/meishu-ui/references/recipes-precomposited.md`](skill/meishu-ui/references/recipes-precomposited.md).
+视频预合成：[`recipes-precomposited.md`](skill/meishu-ui/references/recipes-precomposited.md) · `npm run remotion:studio`
 
-## Theme packs
+## 七套色调
 
-`ref123` · `klein` · `sky` · `amber` · `cinnabar` · `chrome` · `white` (light)
+`ref123` 翠玉 · `klein` 克莱因 · `sky` 天际 · `amber` 琥珀 · `cinnabar` 中国红 · `chrome` 铬 · `white` 白瓷
 
-## Hard don'ts
+## 硬禁忌
 
-1. No `filter` on ancestors of **live** Web glass
-2. Don't ship glass over an opaque stage — need Atmosphere
-3. No hardcoded brand hues — use accent / wash tokens
-4. Nest blur ≤ 2 depths; deeper → tint-only
+1. 玻璃祖先不得有 `filter`（会杀掉 `backdrop-filter`）
+2. 台面不得不透明 — 要有 Atmosphere
+3. 不许硬编码品牌色 — 用 accent / wash token
+4. 真 blur ≤ 2 层；更深 tint-only
 
-## Status
+## 版本
 
-| Milestone | What |
-|-----------|------|
-| [v2.0](https://github.com/qixian771-spec/meishu-ui/releases/tag/v2.0) | `Glass*` live glass, 7 packs, gallery, Skill |
-| [v2.1](https://github.com/qixian771-spec/meishu-ui/releases/tag/v2.1) | `Precomposed*` + Remotion demo |
-
-## Manage this repo (cheat sheet)
-
-| What | How |
-|------|-----|
-| About / topics / homepage | `gh repo edit --description … --homepage … --add-topic …` |
-| Live demo | GitHub Actions → Pages (`.github/workflows/pages.yml`) |
-| Social preview card | Settings → General → Social preview → upload `docs/media/og.png` |
-| Releases | Tags `v2.0` / `v2.1` already pushed |
-| README is the homepage | First image + badges = first screen visitors see |
+| Tag | 内容 |
+|-----|------|
+| [v2.0](https://github.com/qixian771-spec/meishu-ui/releases/tag/v2.0) | 实时玻璃原语 · 七套色 · 画廊 · Skill |
+| [v2.1](https://github.com/qixian771-spec/meishu-ui/releases/tag/v2.1) | 预合成玻璃 · Remotion demo |
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT · [LICENSE](LICENSE)
 
-Visual inspiration only: ClauseOS / RonDesignLab. Not affiliated.
-
-<p align="center">
-  <img src="docs/media/og.png" alt="meishu-ui social card" width="640" />
-</p>
+视觉灵感来自 ClauseOS / RonDesignLab，无隶属关系。
