@@ -26,8 +26,9 @@ Pane        主窗格 — rim + wash + 可读内容区
 Inset/Row   玻璃套玻璃 — 更轻；第 3 层起 tint-only
 ```
 
-API：`GlassAtmosphere` / `GlassShell` / `GlassPane` / `GlassInset`  
-Token：`resolveThemeTokens` / `applyThemeTokens`  
+API（Web）：`GlassAtmosphere` / `GlassShell` / `GlassPane` / `GlassInset`  
+API（预合成）：`PrecomposedAtmosphere` / `PrecomposedShell` / `PrecomposedPane` / `PrecomposedInset`  
+Token：`resolveThemeTokens` / `applyThemeTokens` / `buildPaneSpec`  
 细节 → `references/`。
 
 ## 平台分叉
@@ -37,9 +38,10 @@ Token：`resolveThemeTokens` / `applyThemeTokens`
 | 模糊 | `backdrop-filter` | 背景副本 `filter: blur()` 裁形 |
 | wash | canvas / multiply | 预乘实色 |
 | 分层 | z-index | DOM 顺序 |
-| 色值 | CSS 变量 | `ThemeTokens.*Rgb` |
+| 色值 | CSS 变量 | `ThemeTokens` 传入组件 |
+| 组件 | `Glass*` | `Precomposed*` |
 
-预合成路径方案级伪代码见 `references/recipes-precomposited.md`（**未经渲染验证，v2.1**）。
+预合成可跑配方：`references/recipes-precomposited.md` · Demo：`npm run remotion:studio`。
 
 ## 硬禁忌
 

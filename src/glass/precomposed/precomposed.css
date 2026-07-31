@@ -1,0 +1,118 @@
+/* Precomposed glass — NO backdrop-filter. Blur lives on a clipped backdrop copy. */
+
+.pc-root {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  color: var(--pc-text, #fff);
+}
+
+.pc-atmosphere {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: var(--pc-stage-bg, #000);
+}
+
+.pc-atmosphere-bloom {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(72px);
+  opacity: 0.85;
+  will-change: transform;
+}
+
+.pc-atmosphere-bloom--a {
+  width: 55%;
+  height: 45%;
+  top: -8%;
+  right: -6%;
+  background: radial-gradient(circle, var(--pc-bloom-a) 0%, transparent 70%);
+}
+
+.pc-atmosphere-bloom--b {
+  width: 48%;
+  height: 40%;
+  bottom: -10%;
+  left: -8%;
+  background: radial-gradient(circle, var(--pc-bloom-b) 0%, transparent 68%);
+}
+
+.pc-atmosphere-bloom--c {
+  width: 36%;
+  height: 32%;
+  top: 38%;
+  left: 32%;
+  background: radial-gradient(circle, var(--pc-bloom-c) 0%, transparent 65%);
+}
+
+.pc-shell {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+.pc-shell-side {
+  position: relative;
+  width: 240px;
+  flex-shrink: 0;
+  padding: 20px 16px;
+}
+
+.pc-shell-main {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  padding: 24px;
+  overflow: auto;
+}
+
+.pc-pane,
+.pc-inset {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--pc-radius, 24px);
+  border: 1px solid var(--pc-rim-border);
+  color: var(--pc-text);
+  box-shadow:
+    inset 0 1px 0 var(--pc-rim-highlight),
+    0 16px 36px rgba(0, 0, 0, 0.35);
+}
+
+.pc-inset {
+  border-radius: var(--pc-radius, 16px);
+  box-shadow:
+    inset 0 1px 0 var(--pc-rim-highlight),
+    0 8px 18px rgba(0, 0, 0, 0.28);
+}
+
+.pc-blur-copy {
+  position: absolute;
+  inset: -12%;
+  background: var(--pc-backdrop);
+  filter: blur(var(--pc-blur, 0px));
+  transform: scale(1.08);
+  pointer-events: none;
+}
+
+.pc-blur-copy.is-tint-only {
+  filter: none;
+  opacity: 0;
+}
+
+.pc-fill {
+  position: absolute;
+  inset: 0;
+  background:
+    var(--pc-sheen),
+    var(--pc-fill);
+  pointer-events: none;
+}
+
+.pc-content {
+  position: relative;
+  padding: var(--pc-pad, 20px);
+}

@@ -33,3 +33,20 @@ export type { GlassPaneProps } from './components/GlassPane';
 export { GlassInset } from './components/GlassInset';
 export type { GlassInsetProps } from './components/GlassInset';
 export { GlassDepthContext, useGlassDepth } from './components/GlassDepthContext';
+export {
+  buildAtmosphereSpec,
+  buildPaneSpec,
+  PrecomposedAtmosphere,
+  PrecomposedShell,
+  PrecomposedPane,
+  PrecomposedInset,
+  usePrecomposedDepth,
+  PrecomposedDepthProvider,
+} from './precomposed';
+export type {
+  PrecomposedAtmosphereSpec,
+  PrecomposedPaneSpec,
+  PrecomposedAtmosphereProps,
+  PrecomposedShellProps,
+  PrecomposedPaneProps,
+} from './precomposed';

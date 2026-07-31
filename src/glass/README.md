@@ -1,7 +1,7 @@
 # `src/glass` — web implementation of the glass art system
 
 **Truth layer** = platform-agnostic tokens + Skill contract.  
-**This folder** = first implementation (React/CSS). Remotion comes in v2.1.
+**This folder** = Web live glass (`Glass*`) + precomposed / video glass (`Precomposed*`, `precomposed/`). Remotion demo: `remotion/PrecomposedDemo.tsx`.
 
 ## Consume in another project
 

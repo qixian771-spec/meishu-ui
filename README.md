@@ -15,6 +15,14 @@ npm run dev
 
 见 [`src/glass/README.md`](src/glass/README.md)。人读文档：`docs/FRAMEWORK.md`（Phase 12）。Skill：`skill/meishu-ui/`。
 
+## Remotion（v2.1 预合成）
+
+```bash
+npm run remotion:studio
+```
+
+Composition：`PrecomposedDemo`。实现：`src/glass/precomposed`。
+
 ## 测试
 
 ```bash

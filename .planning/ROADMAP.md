@@ -4,45 +4,37 @@
 
 - ✅ **v1.0** Liquid + SPECTRA exploration — Phases 1–8 (shipped 2026-07-30)
 - ✅ **v2.0** ClauseOS Glass Framework + Skill — Phases 9–12 (shipped 2026-07-31)
-- 📋 **v2.1** Remotion / video precomposed glass — not started
+- ✅ **v2.1** Remotion / Precomposed Glass — Phases 13–14 (shipped 2026-07-31)
 
 ## Phases
 
 <details>
-<summary>✅ v1.0 Liquid + SPECTRA (Phases 1–8) — SHIPPED 2026-07-30</summary>
+<summary>✅ v2.0 (Phases 9–12) — SHIPPED 2026-07-31</summary>
 
-See git history / prior planning archives.
+[milestones/v2.0-ROADMAP.md](milestones/v2.0-ROADMAP.md)
 
 </details>
 
 <details>
-<summary>✅ v2.0 Glass Framework + Skill (Phases 9–12) — SHIPPED 2026-07-31</summary>
+<summary>✅ v2.1 Precomposed / Remotion (Phases 13–14) — SHIPPED 2026-07-31</summary>
 
-- [x] Phase 9: Framework Boundary & Tokens (2/2) — archived
-- [x] Phase 10: Full-Glass Primitives (2/2) — archived
-- [x] Phase 11: Theme Packs & Demo Gallery (2/2) — archived
-- [x] Phase 12: Skill + 喂喂 Path (2/2) — archived
+- [x] Phase 13: Precomposed Glass Renderer
+- [x] Phase 14: Remotion Demo + Skill Align
 
-Full detail: [milestones/v2.0-ROADMAP.md](milestones/v2.0-ROADMAP.md)  
-Requirements: [milestones/v2.0-REQUIREMENTS.md](milestones/v2.0-REQUIREMENTS.md)  
-Audit: [milestones/v2.0-MILESTONE-AUDIT.md](milestones/v2.0-MILESTONE-AUDIT.md)
+Full detail: [milestones/v2.1-ROADMAP.md](milestones/v2.1-ROADMAP.md)  
+Requirements: [milestones/v2.1-REQUIREMENTS.md](milestones/v2.1-REQUIREMENTS.md)  
+Audit: [milestones/v2.1-MILESTONE-AUDIT.md](milestones/v2.1-MILESTONE-AUDIT.md)
 
 </details>
 
-### 📋 v2.1 Remotion / video implementation (Planned)
+## Next (not started)
 
-- [ ] Phase 13: Precomposed glass renderer (blurred backdrop copy + premultiplied wash)
-- [ ] Phase 14: Remotion compositions consume `resolveThemeTokens` + meishu-ui contract
-
-**Notes:** Same tokens + Skill contract as v2.0. Renderers lack `backdrop-filter` / `mix-blend-mode` / `z-index` — use DOM order + clipped blur copies. Drive motion with `useCurrentFrame()`.
+- 喂喂 App 按 `docs/WEIWEI_MIGRATION.md` 接入（另仓）
+- npm 发包 / Storybook（可选）
 
 ## Progress
 
-| Phase | Milestone | Plans | Status | Completed |
-|-------|-----------|-------|--------|-----------|
-| 9. Framework Boundary & Tokens | v2.0 | 2/2 | Complete | 2026-07-31 |
-| 10. Full-Glass Primitives | v2.0 | 2/2 | Complete | 2026-07-31 |
-| 11. Theme Packs & Demo Gallery | v2.0 | 2/2 | Complete | 2026-07-31 |
-| 12. Skill + 喂喂 Path | v2.0 | 2/2 | Complete | 2026-07-31 |
-| 13. Precomposed glass (planned) | v2.1 | 0/? | Not started | — |
-| 14. Remotion compositions (planned) | v2.1 | 0/? | Not started | — |
+| Phase | Milestone | Status | Completed |
+|-------|-----------|--------|-----------|
+| 13. Precomposed Glass Renderer | v2.1 | Complete | 2026-07-31 |
+| 14. Remotion Demo + Skill Align | v2.1 | Complete | 2026-07-31 |
