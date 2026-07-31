@@ -1,12 +1,16 @@
 ---
-gsd_state_version: '1.0'
-status: complete
+gsd_state_version: 1.0
+milestone: v2.0
+milestone_name: ClauseOS Glass Framework + Skill
+status: planning
+last_updated: "2026-07-31T03:11:05.721Z"
+last_activity: 2026-07-30
 progress:
-  total_phases: 7
-  completed_phases: 7
-  total_plans: 6
-  completed_plans: 6
-  percent: 100
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
@@ -15,21 +19,20 @@ progress:
 
 See: .planning/PROJECT.md (updated 2026-07-30)
 
-**Core value:** 用户打开应用第一眼就能感受到「会流动、会呼吸」的液态视觉，且这种液态美学作为系统级母题一致地贯穿登录、仪表盘、列表详情、设置等所有界面。
-**Current focus:** All Milestone v1.0 Phases Complete (100%)
+**Core value:** 别人用这套框架或 Skill，能做出满屏透亮玻璃 + 玻璃套玻璃 + 一套色打到底的界面。
+**Current focus:** Milestone v2.0 — defining requirements (research → roadmap)
 
 ## Current Position
 
-Phase: 7 of 7 (Cross-Device QA & Reference Consistency)
-Plan: 1 of 1 in current phase (Complete)
-Status: Complete
-Last activity: 2026-07-30 — Milestone v1.0 completed; 54 vitest contract tests green
-
-Progress: [██████████] 100% (All 7 phases delivered)
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-07-30 — Milestone v2.0 started
 
 ## Performance Metrics
 
 **Velocity:**
+
 - Total plans completed: 6
 - Average duration: 1 session
 - Total execution time: 6 sessions
@@ -47,6 +50,7 @@ Progress: [██████████] 100% (All 7 phases delivered)
 | 7 (cross-device qa) | 1 | 1 | 1 session |
 
 **Recent Trend:**
+
 - Last 5 plans: 03-01, 04-01, 05-01, 06-01, 07-01 (all completed)
 - Trend: stable
 
