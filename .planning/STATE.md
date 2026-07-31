@@ -24,10 +24,10 @@ See: .planning/PROJECT.md (updated 2026-07-30)
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: 9 of 12 (not started) — Framework Boundary & Tokens
 Plan: —
-Status: Defining requirements
-Last activity: 2026-07-30 — Milestone v2.0 started
+Status: Roadmap drafted — awaiting approval
+Last activity: 2026-07-30 — v2 research+requirements+roadmap drafted (agents failed; inline)
 
 ## Performance Metrics
 
